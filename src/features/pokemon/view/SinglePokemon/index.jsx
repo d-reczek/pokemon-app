@@ -17,20 +17,26 @@ import {
 import { Button } from "@mui/material";
 
 const SinglePokemon = () => {
+
   let { pokemon } = useParams();
+
   const dispatch = useDispatch();
+
   const fetchAllPokemons = useCallback(() => {
     dispatch(fetchPokemon(pokemon));
   }, [dispatch, pokemon]);
+
   useEffect(() => {
     fetchAllPokemons();
   }, [fetchAllPokemons]);
+
   const pokemonName = useSelector(singlePokemonName);
   const pokemonPhoto = useSelector(singlePokemonPhoto);
   const pokemonId = useSelector(singlePokemonId);
   const pokemonsIsFetching = useSelector(singlePokemonFetching);
   const fetchingError = useSelector(singlePokemonError);
   const pokemonVisible = useSelector(showPokemon);
+
   if (pokemonsIsFetching) {
     return (
       <Box
@@ -44,6 +50,7 @@ const SinglePokemon = () => {
       </Box>
     );
   }
+  
   if (fetchingError) {
     return (
       <Box

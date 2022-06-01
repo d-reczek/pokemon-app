@@ -24,6 +24,7 @@ const PokemonContainer = styled.div`
   background-color: lightgrey;
   border-radius: 15px;
 `;
+
 const PokemonList = () => {
   const dispatch = useDispatch();
 
@@ -34,9 +35,11 @@ const PokemonList = () => {
   useEffect(() => {
     fetchAllPokemons();
   }, [fetchAllPokemons]);
+
   const pokemonList = useSelector(listOfAllPokemons);
   const pokemonsIsFetching = useSelector(listOfAllPokemonsFetching);
   const fetchingError = useSelector(listOfAllPokemonsError);
+
   if (pokemonsIsFetching) {
     return (
       <Box
@@ -50,6 +53,7 @@ const PokemonList = () => {
       </Box>
     );
   }
+
   if (fetchingError) {
     return (
       <Box
@@ -63,6 +67,7 @@ const PokemonList = () => {
       </Box>
     );
   }
+
   return (
     <div>
       <Typography style={{ fontSize: "30px", margin: "10px" }} variant="h1">
