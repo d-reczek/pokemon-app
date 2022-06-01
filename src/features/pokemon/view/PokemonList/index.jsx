@@ -6,7 +6,6 @@ import {
   listOfAllPokemonsFetching,
   listOfAllPokemonsError,
 } from "../../pokemonsSlice";
-import { showPokemon } from "../../pokemonsSlice";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import styled from "styled-components";
@@ -29,7 +28,7 @@ const PokemonList = () => {
   const dispatch = useDispatch();
 
   const fetchAllPokemons = useCallback(() => {
-    dispatch(fetchPokemons());
+    dispatch(fetchPokemons(""));
   }, [dispatch]);
 
   useEffect(() => {
@@ -38,7 +37,6 @@ const PokemonList = () => {
   const pokemonList = useSelector(listOfAllPokemons);
   const pokemonsIsFetching = useSelector(listOfAllPokemonsFetching);
   const fetchingError = useSelector(listOfAllPokemonsError);
-  const showHidePokemon = useSelector(showPokemon);
   if (pokemonsIsFetching) {
     return (
       <Box
