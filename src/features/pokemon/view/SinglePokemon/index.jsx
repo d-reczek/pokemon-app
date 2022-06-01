@@ -18,7 +18,6 @@ import { Button } from "@mui/material";
 
 const SinglePokemon = () => {
   let { pokemon } = useParams();
-  console.log("useParams", pokemon);
   const dispatch = useDispatch();
   const fetchAllPokemons = useCallback(() => {
     dispatch(fetchPokemon(pokemon));
@@ -58,14 +57,13 @@ const SinglePokemon = () => {
       </Box>
     );
   }
-  console.log("show", pokemonVisible);
 
   return (
     <div>
       <Button
         onClick={() => dispatch(showOrHidePokemon())}
         sx={{ margin: "30px" }}>
-        Show Pokemon
+        {pokemonVisible ? "Hide pokemon" : "Show pokemon"}
       </Button>
       {pokemonVisible && (
         <div key={pokemonId}>

@@ -18,7 +18,7 @@ export const fetchPokemon = createAsyncThunk(
       await fetch(`https://pokeapi.co/api/v2/pokemon/${amount}`)
     ).json();
 
-    console.log(response);
+    // console.log(response);
 
     return response;
   }

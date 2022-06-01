@@ -28,7 +28,7 @@ const PokemonList = () => {
   const dispatch = useDispatch();
 
   const fetchAllPokemons = useCallback(() => {
-    dispatch(fetchPokemons(""));
+    dispatch(fetchPokemons());
   }, [dispatch]);
 
   useEffect(() => {
@@ -63,7 +63,6 @@ const PokemonList = () => {
       </Box>
     );
   }
-  console.log(pokemonsIsFetching);
   return (
     <div>
       <Typography style={{ fontSize: "30px", margin: "10px" }} variant="h1">
