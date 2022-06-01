@@ -44,6 +44,8 @@ export const pokemonsSlice = createSlice({
 
       .addCase(fetchPokemons.rejected, (state, action) => {
         state.listOfAllPokemons.error = "wystapil błąd";
+        state.listOfAllPokemons.isFetching = false;
+
       });
   },
 });
@@ -51,6 +53,8 @@ export const pokemonsSlice = createSlice({
 export const { showPokemon } = pokemonsSlice.actions;
 export const listOfAllPokemonsFetching = state =>
   state.pokemons.listOfAllPokemons.isFetching;
+export const listOfAllPokemonsError = state =>
+  state.pokemons.listOfAllPokemons.error;
 export const listOfAllPokemons = state => state.pokemons.listOfAllPokemons.data;
 
 export default pokemonsSlice.reducer;
