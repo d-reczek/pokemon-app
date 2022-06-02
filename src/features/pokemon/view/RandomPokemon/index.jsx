@@ -75,7 +75,12 @@ const RandomPokemon = () => {
         }}>
         {pokemonVisibility && (
           <div key={fetchdPokemon.id}>
-            <p style={{ textTransform: "capitalize" }}>{fetchdPokemon.name}</p>
+            <p>
+              Pokemon name:
+              <span style={{ textTransform: "capitalize" }}>
+                {` ${fetchdPokemon.name}`}
+              </span>{" "}
+            </p>
             <img src={fetchdPokemon.sprites.front_default} alt="pokemon" />
           </div>
         )}
