@@ -4,7 +4,7 @@ import PokemonList from "./features/pokemon/view/PokemonList";
 import Navigation from "./components/Navigation";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
-import SinglePokemon from "./features/pokemon/view/SinglePokemon";
+import RandomPokemon from "./features/pokemon/view/RandomPokemon";
 function App() {
   return (
     <div className="App">
@@ -12,9 +12,9 @@ function App() {
         <Navigation />
         <Routes>
           <>
-            <Route path="pokemon-list" element={<PokemonList />} />
             <Route path="/" element={<Home />} />
-            <Route path="/:pokemon" element={<SinglePokemon />} />
+            <Route path="/pokemons" element={<PokemonList />} />
+            <Route path="/pokemons/:pokemon" element={<RandomPokemon />} />
           </>
         </Routes>
       </Router>

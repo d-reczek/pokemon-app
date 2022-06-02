@@ -2,9 +2,9 @@ import { useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPokemons } from "../../pokemonsSlice";
 import {
-  listOfAllPokemons,
-  listOfAllPokemonsFetching,
-  listOfAllPokemonsError,
+  selectListOfAllPokemons,
+  selectPokemonsFetching,
+  selectPokemonsError,
 } from "../../pokemonsSlice";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
@@ -29,16 +29,16 @@ const PokemonList = () => {
   const dispatch = useDispatch();
 
   const fetchAllPokemons = useCallback(() => {
-    dispatch(fetchPokemons());
+    dispatch(fetchPokemons(""));
   }, [dispatch]);
 
   useEffect(() => {
     fetchAllPokemons();
   }, [fetchAllPokemons]);
 
-  const pokemonList = useSelector(listOfAllPokemons);
-  const pokemonsIsFetching = useSelector(listOfAllPokemonsFetching);
-  const fetchingError = useSelector(listOfAllPokemonsError);
+  const pokemonList = useSelector(selectListOfAllPokemons);
+  const pokemonsIsFetching = useSelector(selectPokemonsFetching);
+  const fetchingError = useSelector(selectPokemonsError);
 
   if (pokemonsIsFetching) {
     return (
@@ -75,7 +75,11 @@ const PokemonList = () => {
       </Typography>
       <PokemonContainer>
         {Array.isArray(pokemonList) &&
-          pokemonList.map(pokemon => <p key={pokemon.name}>{pokemon.name}</p>)}
+          pokemonList.map(pokemon => (
+            <p style={{ textTransform: "capitalize" }} key={pokemon.name}>
+              {pokemon.name}
+            </p>
+          ))}
       </PokemonContainer>
     </div>
   );
