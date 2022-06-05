@@ -12,10 +12,11 @@ const pokemonInitialState = {
     error: null,
   },
   pokemonVisibilty: false,
+  offset: 20,
 };
 
 export const fetchPokemons = createAsyncThunk(
-  "counter/fetchPokemons",
+  "pokemons/fetchPokemons",
   async amount => {
     const response = await (
       await fetch(`https://pokeapi.co/api/v2/pokemon/${amount}`)
@@ -34,13 +35,24 @@ export const pokemonsSlice = createSlice({
     togglePokemonVisibility: state => {
       state.pokemonVisibilty = !state.pokemonVisibilty;
     },
+    resetPokemonVisibility: state => {
+      state.pokemonVisibilty = false;
+    },
+    toggleRandomNumber: state => {
+      state.randomNumber = !state.randomNumber;
+    },
+    getNewPokemons: state => {
+      state.offset += 20;
+    },
+    getPreviousPokemons: state => {
+      state.offset -= 20;
+    },
   },
 
   extraReducers: builder => {
     builder
       .addCase(fetchPokemons.pending, state => {
         state.listOfAllPokemons.isFetching = true;
-        state.pokemonVisibilty = false;
       })
 
       .addCase(fetchPokemons.fulfilled, (state, action) => {
@@ -52,7 +64,6 @@ export const pokemonsSlice = createSlice({
       .addCase(fetchPokemons.rejected, (state, action) => {
         state.listOfAllPokemons.error = "wystapil błąd";
         state.listOfAllPokemons.isFetching = false;
-        state.pokemonVisibilty = false;
       });
   },
 });
@@ -64,12 +75,19 @@ export const selectPokemonsError = state =>
 export const selectListOfAllPokemons = state =>
   state.pokemons.listOfAllPokemons.data;
 
-export const { togglePokemonVisibility } = pokemonsSlice.actions;
+export const {
+  togglePokemonVisibility,
+  getNewPokemons,
+  getPreviousPokemons,
+  resetPokemonVisibility,
+} = pokemonsSlice.actions;
 
 export const selectSinglePokemon = state =>
   state.pokemons.singlePokemon.pokemon;
 
 export const selectTogglePokemonVisibility = state =>
   state.pokemons.pokemonVisibilty;
+
+export const selectGetNewPokemons = state => state.pokemons.offset;
 
 export default pokemonsSlice.reducer;

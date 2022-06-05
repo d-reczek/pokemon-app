@@ -1,10 +1,9 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPokemons } from "../../pokemonsSlice";
 
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import { useParams } from "react-router-dom";
 import {
   togglePokemonVisibility,
   selectSinglePokemon,
@@ -15,23 +14,40 @@ import {
 import { Button } from "@mui/material";
 
 const RandomPokemon = () => {
-  let { pokemon } = useParams();
+  const [number, setNumber] = useState();
+  const fetchdPokemon = useSelector(selectSinglePokemon);
+  const pokemonsIsFetching = useSelector(selectPokemonsFetching);
+  const fetchingError = useSelector(selectPokemonsError);
+  const pokemonVisibility = useSelector(selectTogglePokemonVisibility);
+  let random = max => Math.floor(Math.random() * max) + 1;
 
   const dispatch = useDispatch();
 
   const fetchAllPokemons = useCallback(() => {
-    dispatch(fetchPokemons(pokemon));
-  }, [dispatch, pokemon]);
+    if (number) {
+      dispatch(fetchPokemons(number));
+    } else {
+      setNumber(random(898));
+      dispatch(togglePokemonVisibility());
+    }
+  }, [dispatch, pokemonVisibility, number]);
+
+  useEffect(() => {
+    dispatch(togglePokemonVisibility());
+  }, []);
 
   useEffect(() => {
     fetchAllPokemons();
   }, [dispatch, fetchAllPokemons]);
 
-  const fetchdPokemon = useSelector(selectSinglePokemon);
-  const pokemonsIsFetching = useSelector(selectPokemonsFetching);
-  const fetchingError = useSelector(selectPokemonsError);
-  const pokemonVisibility = useSelector(selectTogglePokemonVisibility);
-  console.log("url", pokemonVisibility);
+  const handleGetNewRandomPokemon = () => {
+    dispatch(togglePokemonVisibility());
+    if (pokemonVisibility) {
+      setNumber(random(898));
+    }
+  };
+
+  console.log("number", number);
   if (pokemonsIsFetching) {
     return (
       <Box
@@ -61,10 +77,8 @@ const RandomPokemon = () => {
   }
   return (
     <>
-      <Button
-        onClick={() => dispatch(togglePokemonVisibility())}
-        sx={{ margin: "30px" }}>
-        {pokemonVisibility ? "Hide pokemon" : "Show pokemon"}
+      <Button onClick={handleGetNewRandomPokemon} sx={{ margin: "30px" }}>
+        {pokemonVisibility ? "Get new random pokemon" : "Who's that Pokemon"}
       </Button>
       <div
         style={{

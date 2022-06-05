@@ -14,7 +14,7 @@ function App() {
           <>
             <Route path="/" element={<Home />} />
             <Route path="/pokemons" element={<PokemonList />} />
-            <Route path="/pokemons/:pokemon" element={<RandomPokemon />} />
+            <Route path="/pokemons/random" element={<RandomPokemon />} />
           </>
         </Routes>
       </Router>

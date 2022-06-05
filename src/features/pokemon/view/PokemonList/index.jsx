@@ -1,15 +1,19 @@
 import { useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPokemons } from "../../pokemonsSlice";
 import {
+  fetchPokemons,
   selectListOfAllPokemons,
   selectPokemonsFetching,
   selectPokemonsError,
+  selectGetNewPokemons,
+  getNewPokemons,
+  getPreviousPokemons,
+  resetPokemonVisibility,
 } from "../../pokemonsSlice";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import styled from "styled-components";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
 const PokemonContainer = styled.div`
   display: flex;
@@ -27,10 +31,12 @@ const PokemonContainer = styled.div`
 
 const PokemonList = () => {
   const dispatch = useDispatch();
+  let offset = useSelector(selectGetNewPokemons);
 
   const fetchAllPokemons = useCallback(() => {
-    dispatch(fetchPokemons(""));
-  }, [dispatch]);
+    dispatch(fetchPokemons(`?offset=${offset}&limit=20`));
+    dispatch(resetPokemonVisibility());
+  }, [dispatch, offset]);
 
   useEffect(() => {
     fetchAllPokemons();
@@ -40,6 +46,19 @@ const PokemonList = () => {
   const pokemonsIsFetching = useSelector(selectPokemonsFetching);
   const fetchingError = useSelector(selectPokemonsError);
 
+  const handleGetNewPokemons = () => {
+    dispatch(getNewPokemons());
+    console.log("offset", offset);
+  };
+  const handleGetPreviousPokemons = () => {
+    if (offset === 0) {
+      offset = 0;
+      console.log("offset", offset);
+    } else {
+      dispatch(getPreviousPokemons());
+      console.log("offset", offset);
+    }
+  };
   if (pokemonsIsFetching) {
     return (
       <Box
@@ -73,6 +92,15 @@ const PokemonList = () => {
       <Typography style={{ fontSize: "30px", margin: "10px" }} variant="h1">
         List of all pokemons
       </Typography>
+      <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
+        <Button variant="outlined" onClick={handleGetNewPokemons}>
+          Get new Pokemons
+        </Button>
+        <Button variant="outlined" onClick={handleGetPreviousPokemons}>
+          Get previous Pokemons
+        </Button>
+      </div>
+
       <PokemonContainer>
         {Array.isArray(pokemonList) &&
           pokemonList.map(pokemon => (
