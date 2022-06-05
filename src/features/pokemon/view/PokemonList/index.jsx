@@ -48,15 +48,13 @@ const PokemonList = () => {
 
   const handleGetNewPokemons = () => {
     dispatch(getNewPokemons());
-    console.log("offset", offset);
   };
   const handleGetPreviousPokemons = () => {
     if (offset === 0) {
       offset = 0;
-      console.log("offset", offset);
+      alert("this is first page with pokemons");
     } else {
       dispatch(getPreviousPokemons());
-      console.log("offset", offset);
     }
   };
   if (pokemonsIsFetching) {

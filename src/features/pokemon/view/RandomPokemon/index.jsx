@@ -47,7 +47,6 @@ const RandomPokemon = () => {
     }
   };
 
-  console.log("number", number);
   if (pokemonsIsFetching) {
     return (
       <Box
@@ -78,7 +77,7 @@ const RandomPokemon = () => {
   return (
     <>
       <Button onClick={handleGetNewRandomPokemon} sx={{ margin: "30px" }}>
-        {pokemonVisibility ? "Get new random pokemon" : "Who's that Pokemon"}
+        {pokemonVisibility ? "Get new random pokemon?" : "Who's that Pokemon"}
       </Button>
       <div
         style={{
