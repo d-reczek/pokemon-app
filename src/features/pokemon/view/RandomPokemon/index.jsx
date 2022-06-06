@@ -23,22 +23,22 @@ const RandomPokemon = () => {
 
   const dispatch = useDispatch();
 
-  const fetchAllPokemons = useCallback(() => {
+  const fetchPokemon = useCallback(() => {
     if (number) {
       dispatch(fetchPokemons(number));
     } else {
       setNumber(random(898));
       dispatch(togglePokemonVisibility());
     }
-  }, [dispatch, pokemonVisibility, number]);
+  }, [dispatch, number]);
 
   useEffect(() => {
     dispatch(togglePokemonVisibility());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
-    fetchAllPokemons();
-  }, [dispatch, fetchAllPokemons]);
+    fetchPokemon();
+  }, [dispatch, fetchPokemon]);
 
   const handleGetNewRandomPokemon = () => {
     dispatch(togglePokemonVisibility());

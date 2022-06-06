@@ -35,12 +35,17 @@ export const pokemonsSlice = createSlice({
     togglePokemonVisibility: state => {
       state.pokemonVisibilty = !state.pokemonVisibilty;
     },
+    //tu miałem problem z komponentem RandomPokemoen
+    //gdy po ustawieniu pokemonVisibility na true przalaczalem sie na widok
+    //komponentu PokemonList a nastpenie wracalem do PokemonRandom
+    //to wyskakiwal blad poniewaz pokemonVisibility pozostalo na true nie mogl wykonac sie fetch nowego pokemona
+    // i pojawial sie blad ze nie mozna wykonac map poniwaz zmienna nie jest tablica czy cos podobnego
+    //dlatego przy kazdym uruchomieniu jakby resetuje pokemonVisibility na false
+    // tak by uniknac tego bledu nie wiem czy jest to zrobione "zgodnie ze sztuka"
     resetPokemonVisibility: state => {
       state.pokemonVisibilty = false;
     },
-    toggleRandomNumber: state => {
-      state.randomNumber = !state.randomNumber;
-    },
+
     getNewPokemons: state => {
       state.offset += 20;
     },
