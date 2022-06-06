@@ -20,14 +20,14 @@ const RandomPokemon = () => {
   const fetchingError = useSelector(selectPokemonsError);
   const pokemonVisibility = useSelector(selectTogglePokemonVisibility);
   let random = max => Math.floor(Math.random() * max) + 1;
-
+  const amountOfPokemons = 898;
   const dispatch = useDispatch();
 
   const fetchPokemon = useCallback(() => {
     if (number) {
       dispatch(fetchPokemons(number));
     } else {
-      setNumber(random(898));
+      setNumber(random(amountOfPokemons));
       dispatch(togglePokemonVisibility());
     }
   }, [dispatch, number]);
@@ -43,7 +43,7 @@ const RandomPokemon = () => {
   const handleGetNewRandomPokemon = () => {
     dispatch(togglePokemonVisibility());
     if (pokemonVisibility) {
-      setNumber(random(898));
+      setNumber(random(amountOfPokemons));
     }
   };
 

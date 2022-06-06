@@ -91,11 +91,11 @@ const PokemonList = () => {
         List of all pokemons
       </Typography>
       <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
-        <Button variant="outlined" onClick={handleGetNewPokemons}>
-          Get new Pokemons
-        </Button>
         <Button variant="outlined" onClick={handleGetPreviousPokemons}>
           Get previous Pokemons
+        </Button>
+        <Button variant="outlined" onClick={handleGetNewPokemons}>
+          Get new Pokemons
         </Button>
       </div>
 
