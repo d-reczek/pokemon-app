@@ -13,7 +13,6 @@ const pokemonInitialState = {
   },
   pokemonVisibilty: false,
   filters: {
-    next: null,
     offset: 20,
     limit: 20,
   },
@@ -27,6 +26,18 @@ export const fetchPokemons = createAsyncThunk(
       await fetch(
         `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${limit}`
       )
+    ).json();
+
+    console.log(response);
+
+    return response;
+  }
+);
+export const fetchPokemon = createAsyncThunk(
+  "pokemons/fetchPokemon",
+  async pokemonName => {
+    const response = await (
+      await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
     ).json();
 
     console.log(response);
@@ -53,20 +64,10 @@ export const pokemonsSlice = createSlice({
       state.pokemonVisibilty = false;
     },
 
-    // getNewPokemons: state => {
-    //   state.offset += 20;
-    // },
-    // getPreviousPokemons: state => {
-    //   state.offset -= 20;
-    // },
     updateFilters: (state, action) => {
-      // if (action.payload.next) {
-      //   state.offset = action.payload.offset;
-      //   console.log(state.offset);
-      // }
       if (action.payload.next) {
         state.filters.offset += action.payload.offset;
-      } else if (!action.payload.next) {
+      } else if (action.payload.prev) {
         if (state.filters.offset === 0) {
           state.filters.offset = 0;
           alert("this is first page with pokemons");
@@ -82,16 +83,26 @@ export const pokemonsSlice = createSlice({
       .addCase(fetchPokemons.pending, state => {
         state.listOfAllPokemons.isFetching = true;
       })
+      .addCase(fetchPokemon.pending, state => {
+        state.singlePokemon.isFetching = true;
+      })
 
       .addCase(fetchPokemons.fulfilled, (state, action) => {
         state.listOfAllPokemons.isFetching = false;
         state.listOfAllPokemons.data = action.payload.results;
+      })
+      .addCase(fetchPokemon.fulfilled, (state, action) => {
+        state.singlePokemon.isFetching = false;
         state.singlePokemon.pokemon = action.payload;
       })
 
       .addCase(fetchPokemons.rejected, (state, action) => {
         state.listOfAllPokemons.error = "wystapil błąd";
         state.listOfAllPokemons.isFetching = false;
+      })
+      .addCase(fetchPokemon.rejected, (state, action) => {
+        state.singlePokemon.error = "wystapil błąd";
+        state.singlePokemon.isFetching = false;
       });
   },
 });
@@ -113,6 +124,10 @@ export const {
 
 export const selectSinglePokemon = state =>
   state.pokemons.singlePokemon.pokemon;
+export const selectSinglePokemonFetching = state =>
+  state.pokemons.singlePokemon.isFetching;
+export const selectSinglePokemonError = state =>
+  state.pokemons.singlePokemon.error;
 
 export const selectTogglePokemonVisibility = state =>
   state.pokemons.pokemonVisibilty;

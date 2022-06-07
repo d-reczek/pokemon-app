@@ -6,15 +6,14 @@ import {
   selectPokemonsFetching,
   selectPokemonsError,
   selectFilters,
-  getNewPokemons,
-  getPreviousPokemons,
   resetPokemonVisibility,
   updateFilters,
 } from "../../pokemonsSlice";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import styled from "styled-components";
-import { Button, Typography } from "@mui/material";
+import { Button, Tooltip, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const PokemonContainer = styled.div`
   display: flex;
@@ -29,13 +28,13 @@ const PokemonContainer = styled.div`
   background-color: lightgrey;
   border-radius: 15px;
 `;
-
 const PokemonList = () => {
   const dispatch = useDispatch();
-  let { offset, limit } = useSelector(selectFilters);
-
+  const { offset, limit } = useSelector(selectFilters);
+  // const { userOffset, setUserOffset } = useState(50);
+  // const { userLimit, setUserLimit } = useState(30);
   const fetchAllPokemons = useCallback(() => {
-    dispatch(fetchPokemons({offset, limit}));
+    dispatch(fetchPokemons({ offset, limit }));
     dispatch(resetPokemonVisibility());
   }, [dispatch, offset, limit]);
 
@@ -47,19 +46,6 @@ const PokemonList = () => {
   const pokemonsIsFetching = useSelector(selectPokemonsFetching);
   const fetchingError = useSelector(selectPokemonsError);
 
-  const handleGetNewPokemons = () => {
-    dispatch(updateFilters({ next: true, offset: 20, limit: 20 }));
-  };
-  const handleGetPreviousPokemons = () => {
-    dispatch(updateFilters({ next: false, offset: 20, limit: 20 }));
-
-    // if (offset === 0) {
-    //   offset = 0;
-    //   alert("this is first page with pokemons");
-    // } else {
-    //   dispatch(getPreviousPokemons());
-    // }
-  };
   if (pokemonsIsFetching) {
     return (
       <Box
@@ -93,15 +79,16 @@ const PokemonList = () => {
       <Typography style={{ fontSize: "30px", margin: "10px" }} variant="h1">
         List of all pokemons
       </Typography>
-      <button
-        onClick={() => dispatch(updateFilters({ next: true, offset: 5 }))}>
-        test
-      </button>
+
       <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
-        <Button variant="outlined" onClick={handleGetPreviousPokemons}>
+        <Button
+          variant="outlined"
+          onClick={() => dispatch(updateFilters({ prev: true, offset: 20 }))}>
           Get previous Pokemons
         </Button>
-        <Button variant="outlined" onClick={handleGetNewPokemons}>
+        <Button
+          variant="outlined"
+          onClick={() => dispatch(updateFilters({ next: true, offset: 20 }))}>
           Get new Pokemons
         </Button>
       </div>
@@ -109,9 +96,16 @@ const PokemonList = () => {
       <PokemonContainer>
         {Array.isArray(pokemonList) &&
           pokemonList.map(pokemon => (
-            <p style={{ textTransform: "capitalize" }} key={pokemon.name}>
-              {pokemon.name}
-            </p>
+            <Tooltip key={pokemon.name} title="Show pokemon" placement="top">
+              <Button
+                sx={{ color: "inherit" }}
+                component={Link}
+                to={`/pokemons/${pokemon.name}`}>
+                <div>
+                  <p style={{ textTransform: "capitalize" }}>{pokemon.name}</p>
+                </div>
+              </Button>
+            </Tooltip>
           ))}
       </PokemonContainer>
     </div>

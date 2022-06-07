@@ -5,6 +5,7 @@ import Navigation from "./components/Navigation";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./features/basicViews/Home";
 import RandomPokemon from "./features/pokemon/view/RandomPokemon";
+import SinglePokemon from "./features/pokemon/view/SinglePokemon";
 function App() {
   return (
     <div className="App">
@@ -15,6 +16,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/pokemons" element={<PokemonList />} />
             <Route path="/pokemons/random" element={<RandomPokemon />} />
+            <Route path="/pokemons/:pokemonId" element={<SinglePokemon />} />
           </>
         </Routes>
       </Router>

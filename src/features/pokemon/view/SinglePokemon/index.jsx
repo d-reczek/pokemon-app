@@ -1,47 +1,33 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import {
-  togglePokemonVisibility,
   selectSinglePokemon,
   selectSinglePokemonFetching,
   selectSinglePokemonError,
-  selectTogglePokemonVisibility,
   fetchPokemon,
 } from "../../pokemonsSlice";
 import { Button } from "@mui/material";
 import SinglePokemonContainer from "../components/SingldePokemonContainer";
+import { Link, useParams } from "react-router-dom";
 
-const RandomPokemon = () => {
-  const [randomNumber, setRandomNumber] = useState();
+const SinglePokemon = () => {
+  const dispatch = useDispatch();
+  const { pokemonId } = useParams();
+
   const fetchdPokemon = useSelector(selectSinglePokemon);
   const pokemonIsFetching = useSelector(selectSinglePokemonFetching);
   const fetchingError = useSelector(selectSinglePokemonError);
-  const pokemonVisibility = useSelector(selectTogglePokemonVisibility);
-  const random = max => Math.floor(Math.random() * max) + 1;
-  const amountOfPokemons = 898;
-  const dispatch = useDispatch();
 
   const fetchSinglePokemon = useCallback(() => {
-    if (randomNumber) {
-      dispatch(fetchPokemon(randomNumber));
-    } else {
-      setRandomNumber(random(amountOfPokemons));
-    }
-  }, [dispatch, randomNumber]);
+    dispatch(fetchPokemon(pokemonId));
+  }, [dispatch, pokemonId]);
 
   useEffect(() => {
     fetchSinglePokemon();
   }, [dispatch, fetchSinglePokemon]);
-
-  const handleGetNewRandomPokemon = () => {
-    dispatch(togglePokemonVisibility());
-    if (pokemonVisibility) {
-      setRandomNumber(random(amountOfPokemons));
-    }
-  };
 
   if (pokemonIsFetching) {
     return (
@@ -70,24 +56,23 @@ const RandomPokemon = () => {
       </Box>
     );
   }
+  console.log(fetchdPokemon);
   return (
     <>
-      <Button onClick={handleGetNewRandomPokemon} sx={{ margin: "30px" }}>
-        {pokemonVisibility ? "Get new random pokemon" : "Who's that Pokemon?"}
+      <Button component={Link} to={`/pokemons/`}>
+        Back to pokemon list
       </Button>
-      <div>
-        {pokemonVisibility && (
-          <SinglePokemonContainer
-            id={fetchdPokemon.id}
-            name={fetchdPokemon.name}
-            img={fetchdPokemon.sprites.other["official-artwork"].front_default}
-            height={fetchdPokemon.height}
-            weight={fetchdPokemon.weight}
-          />
-        )}
-      </div>
+      {fetchdPokemon && (
+        <SinglePokemonContainer
+          key={fetchdPokemon.id}
+          name={fetchdPokemon.name}
+          img={fetchdPokemon.sprites.other["official-artwork"].front_default}
+          height={fetchdPokemon.height}
+          weight={fetchdPokemon.weight}
+        />
+      )}
     </>
   );
 };
 
-export default RandomPokemon;
+export default SinglePokemon;
