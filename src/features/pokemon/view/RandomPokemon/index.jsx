@@ -14,23 +14,23 @@ import {
 import { Button } from "@mui/material";
 
 const RandomPokemon = () => {
-  const [number, setNumber] = useState();
+  const [randomNumber, setRandomNumber] = useState();
   const fetchdPokemon = useSelector(selectSinglePokemon);
   const pokemonsIsFetching = useSelector(selectPokemonsFetching);
   const fetchingError = useSelector(selectPokemonsError);
   const pokemonVisibility = useSelector(selectTogglePokemonVisibility);
-  let random = max => Math.floor(Math.random() * max) + 1;
+  const random = max => Math.floor(Math.random() * max) + 1;
   const amountOfPokemons = 898;
   const dispatch = useDispatch();
 
   const fetchPokemon = useCallback(() => {
-    if (number) {
-      dispatch(fetchPokemons(number));
+    if (randomNumber) {
+      dispatch(fetchPokemons(randomNumber));
     } else {
-      setNumber(random(amountOfPokemons));
+      setRandomNumber(random(amountOfPokemons));
       dispatch(togglePokemonVisibility());
     }
-  }, [dispatch, number]);
+  }, [dispatch, randomNumber]);
 
   useEffect(() => {
     dispatch(togglePokemonVisibility());
@@ -43,7 +43,7 @@ const RandomPokemon = () => {
   const handleGetNewRandomPokemon = () => {
     dispatch(togglePokemonVisibility());
     if (pokemonVisibility) {
-      setNumber(random(amountOfPokemons));
+      setRandomNumber(random(amountOfPokemons));
     }
   };
 

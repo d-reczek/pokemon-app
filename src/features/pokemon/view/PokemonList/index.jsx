@@ -5,10 +5,11 @@ import {
   selectListOfAllPokemons,
   selectPokemonsFetching,
   selectPokemonsError,
-  selectGetNewPokemons,
+  selectFilters,
   getNewPokemons,
   getPreviousPokemons,
   resetPokemonVisibility,
+  updateFilters,
 } from "../../pokemonsSlice";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
@@ -31,12 +32,12 @@ const PokemonContainer = styled.div`
 
 const PokemonList = () => {
   const dispatch = useDispatch();
-  let offset = useSelector(selectGetNewPokemons);
+  let { offset, limit } = useSelector(selectFilters);
 
   const fetchAllPokemons = useCallback(() => {
-    dispatch(fetchPokemons(`?offset=${offset}&limit=20`));
+    dispatch(fetchPokemons({offset, limit}));
     dispatch(resetPokemonVisibility());
-  }, [dispatch, offset]);
+  }, [dispatch, offset, limit]);
 
   useEffect(() => {
     fetchAllPokemons();
@@ -47,15 +48,17 @@ const PokemonList = () => {
   const fetchingError = useSelector(selectPokemonsError);
 
   const handleGetNewPokemons = () => {
-    dispatch(getNewPokemons());
+    dispatch(updateFilters({ next: true, offset: 20, limit: 20 }));
   };
   const handleGetPreviousPokemons = () => {
-    if (offset === 0) {
-      offset = 0;
-      alert("this is first page with pokemons");
-    } else {
-      dispatch(getPreviousPokemons());
-    }
+    dispatch(updateFilters({ next: false, offset: 20, limit: 20 }));
+
+    // if (offset === 0) {
+    //   offset = 0;
+    //   alert("this is first page with pokemons");
+    // } else {
+    //   dispatch(getPreviousPokemons());
+    // }
   };
   if (pokemonsIsFetching) {
     return (
@@ -90,6 +93,10 @@ const PokemonList = () => {
       <Typography style={{ fontSize: "30px", margin: "10px" }} variant="h1">
         List of all pokemons
       </Typography>
+      <button
+        onClick={() => dispatch(updateFilters({ next: true, offset: 5 }))}>
+        test
+      </button>
       <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
         <Button variant="outlined" onClick={handleGetPreviousPokemons}>
           Get previous Pokemons

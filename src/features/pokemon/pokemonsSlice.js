@@ -12,14 +12,21 @@ const pokemonInitialState = {
     error: null,
   },
   pokemonVisibilty: false,
-  offset: 20,
+  filters: {
+    next: null,
+    offset: 20,
+    limit: 20,
+  },
 };
 
 export const fetchPokemons = createAsyncThunk(
   "pokemons/fetchPokemons",
-  async amount => {
+  async filters => {
+    const { offset, limit } = filters;
     const response = await (
-      await fetch(`https://pokeapi.co/api/v2/pokemon/${amount}`)
+      await fetch(
+        `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${limit}`
+      )
     ).json();
 
     console.log(response);
@@ -46,11 +53,27 @@ export const pokemonsSlice = createSlice({
       state.pokemonVisibilty = false;
     },
 
-    getNewPokemons: state => {
-      state.offset += 20;
-    },
-    getPreviousPokemons: state => {
-      state.offset -= 20;
+    // getNewPokemons: state => {
+    //   state.offset += 20;
+    // },
+    // getPreviousPokemons: state => {
+    //   state.offset -= 20;
+    // },
+    updateFilters: (state, action) => {
+      // if (action.payload.next) {
+      //   state.offset = action.payload.offset;
+      //   console.log(state.offset);
+      // }
+      if (action.payload.next) {
+        state.filters.offset += action.payload.offset;
+      } else if (!action.payload.next) {
+        if (state.filters.offset === 0) {
+          state.filters.offset = 0;
+          alert("this is first page with pokemons");
+        } else {
+          state.filters.offset -= action.payload.offset;
+        }
+      }
     },
   },
 
@@ -85,6 +108,7 @@ export const {
   getNewPokemons,
   getPreviousPokemons,
   resetPokemonVisibility,
+  updateFilters,
 } = pokemonsSlice.actions;
 
 export const selectSinglePokemon = state =>
@@ -93,6 +117,6 @@ export const selectSinglePokemon = state =>
 export const selectTogglePokemonVisibility = state =>
   state.pokemons.pokemonVisibilty;
 
-export const selectGetNewPokemons = state => state.pokemons.offset;
+export const selectFilters = state => state.pokemons.filters;
 
 export default pokemonsSlice.reducer;
