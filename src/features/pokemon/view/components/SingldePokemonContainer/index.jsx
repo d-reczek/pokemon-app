@@ -13,7 +13,7 @@ const SinglePokemonContainer = ({ id, name, img, height, weight }) => {
         weight:
         <span style={{ textTransform: "capitalize" }}>{` ${weight}`}</span>{" "}
       </p>
-      <img style={{ width: "45%" }} src={img} alt="pokemon" />
+      <img style={{ width: "25%" }} src={img} alt="pokemon" />
     </div>
   );
 };

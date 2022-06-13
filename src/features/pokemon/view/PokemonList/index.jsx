@@ -31,8 +31,6 @@ const PokemonContainer = styled.div`
 const PokemonList = () => {
   const dispatch = useDispatch();
   const { offset, limit } = useSelector(selectFilters);
-  // const { userOffset, setUserOffset } = useState(50);
-  // const { userLimit, setUserLimit } = useState(30);
   const fetchAllPokemons = useCallback(() => {
     dispatch(fetchPokemons({ offset, limit }));
     dispatch(resetPokemonVisibility());
