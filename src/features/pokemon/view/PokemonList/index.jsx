@@ -40,12 +40,8 @@ const PokemonContainer = styled.div`
 const PokemonList = () => {
   const dispatch = useDispatch();
   let { offset, pageSize } = useSelector(selectPokemonFilters);
-  // const fetchAllPokemons = useCallback(() => {
-  //   dispatch(fetchPokemons({ offset, pageSize }));
-  // }, [dispatch, offset, pageSize]);
 
   useEffect(() => {
-    // fetchAllPokemons();
     dispatch(fetchPokemons({ offset, pageSize }));
     dispatch(resetPokemonVisibility());
   }, [dispatch, offset, pageSize]);
