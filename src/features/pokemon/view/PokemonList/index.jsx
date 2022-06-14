@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   fetchPokemons,
@@ -40,14 +40,11 @@ const PokemonContainer = styled.div`
 const PokemonList = () => {
   const dispatch = useDispatch();
   let { offset, pageSize } = useSelector(selectPokemonFilters);
-  const fetchAllPokemons = useCallback(() => {
+
+  useEffect(() => {
     dispatch(fetchPokemons({ offset, pageSize }));
     dispatch(resetPokemonVisibility());
   }, [dispatch, offset, pageSize]);
-
-  useEffect(() => {
-    fetchAllPokemons();
-  }, [fetchAllPokemons]);
 
   const pokemonList = useSelector(selectListOfAllPokemons);
   const pokemonsIsFetching = useSelector(selectPokemonsFetching);
@@ -102,7 +99,7 @@ const PokemonList = () => {
           Get new Pokemons
         </Button>
       </div>
-      <FormControl sx={{ width: "40%", m: "2%" }}>
+      <FormControl sx={{ width: "250px", m: "2%" }}>
         <InputLabel>Select quantity of pokemons</InputLabel>
         <Select
           label="Select quantity of pokemons"

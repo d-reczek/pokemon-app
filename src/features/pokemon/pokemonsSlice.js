@@ -67,7 +67,9 @@ export const pokemonsSlice = createSlice({
     updateOffset: (state, action) => {
       if (state.filters.offset === 0) {
         state.filters.offset = 20;
-        alert("this is first page with pokemons");
+        alert(
+          "This is first page with pokemons, you will return to the first page"
+        );
       } else {
         state.filters.offset = action.payload;
       }
