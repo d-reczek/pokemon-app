@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import CircularProgress from "@mui/material/CircularProgress";
@@ -21,13 +21,14 @@ const SinglePokemon = () => {
   const pokemonIsFetching = useSelector(selectSinglePokemonFetching);
   const fetchingError = useSelector(selectSinglePokemonError);
 
-  const fetchSinglePokemon = useCallback(() => {
-    dispatch(fetchPokemon(pokemonId));
-  }, [dispatch, pokemonId]);
+  // const fetchSinglePokemon = useCallback(() => {
+  //   dispatch(fetchPokemon(pokemonId));
+  // }, [dispatch, pokemonId]);
 
   useEffect(() => {
-    fetchSinglePokemon();
-  }, [dispatch, fetchSinglePokemon]);
+    // fetchSinglePokemon();
+    dispatch(fetchPokemon(pokemonId));
+  }, [dispatch, pokemonId]);
 
   if (pokemonIsFetching) {
     return (

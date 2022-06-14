@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const pokemonInitialState = {
   listOfAllPokemons: {
     data: null,
-    isFetching: false,
+    isFetching: true,
     error: null,
   },
   singlePokemon: {
@@ -14,17 +14,17 @@ const pokemonInitialState = {
   pokemonVisibilty: false,
   filters: {
     offset: 20,
-    limit: 20,
+    pageSize: 20,
   },
 };
 
 export const fetchPokemons = createAsyncThunk(
   "pokemons/fetchPokemons",
   async filters => {
-    const { offset, limit } = filters;
+    const { offset, pageSize } = filters;
     const response = await (
       await fetch(
-        `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${limit}`
+        `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${pageSize}`
       )
     ).json();
 
@@ -65,15 +65,11 @@ export const pokemonsSlice = createSlice({
     },
 
     updateFilters: (state, action) => {
-      if (action.payload.next) {
-        state.filters.offset += action.payload.offset;
-      } else if (action.payload.prev) {
-        if (state.filters.offset === 0) {
-          state.filters.offset = 0;
-          alert("this is first page with pokemons");
-        } else {
-          state.filters.offset -= action.payload.offset;
-        }
+      if (state.filters.offset === 0) {
+        state.filters.offset = 0;
+        alert("this is first page with pokemons");
+      } else {
+        state.filters.offset = action.payload;
       }
     },
   },
@@ -107,13 +103,6 @@ export const pokemonsSlice = createSlice({
   },
 });
 
-export const selectPokemonsFetching = state =>
-  state.pokemons.listOfAllPokemons.isFetching;
-export const selectPokemonsError = state =>
-  state.pokemons.listOfAllPokemons.error;
-export const selectListOfAllPokemons = state =>
-  state.pokemons.listOfAllPokemons.data;
-
 export const {
   togglePokemonVisibility,
   getNewPokemons,
@@ -121,7 +110,12 @@ export const {
   resetPokemonVisibility,
   updateFilters,
 } = pokemonsSlice.actions;
-
+export const selectPokemonsFetching = state =>
+  state.pokemons.listOfAllPokemons.isFetching;
+export const selectPokemonsError = state =>
+  state.pokemons.listOfAllPokemons.error;
+export const selectListOfAllPokemons = state =>
+  state.pokemons.listOfAllPokemons.data;
 export const selectSinglePokemon = state =>
   state.pokemons.singlePokemon.pokemon;
 export const selectSinglePokemonFetching = state =>
@@ -132,6 +126,6 @@ export const selectSinglePokemonError = state =>
 export const selectTogglePokemonVisibility = state =>
   state.pokemons.pokemonVisibilty;
 
-export const selectFilters = state => state.pokemons.filters;
+export const selectPokemonFilters = state => state.pokemons.filters;
 
 export default pokemonsSlice.reducer;

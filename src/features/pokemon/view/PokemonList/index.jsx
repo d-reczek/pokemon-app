@@ -5,7 +5,7 @@ import {
   selectListOfAllPokemons,
   selectPokemonsFetching,
   selectPokemonsError,
-  selectFilters,
+  selectPokemonFilters,
   resetPokemonVisibility,
   updateFilters,
 } from "../../pokemonsSlice";
@@ -30,7 +30,7 @@ const PokemonContainer = styled.div`
 `;
 const PokemonList = () => {
   const dispatch = useDispatch();
-  const { offset, limit } = useSelector(selectFilters);
+  let { offset, limit } = useSelector(selectPokemonFilters);
   const fetchAllPokemons = useCallback(() => {
     dispatch(fetchPokemons({ offset, limit }));
     dispatch(resetPokemonVisibility());
@@ -81,30 +81,29 @@ const PokemonList = () => {
       <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
         <Button
           variant="outlined"
-          onClick={() => dispatch(updateFilters({ prev: true, offset: 20 }))}>
+          onClick={() => dispatch(updateFilters((offset -= 20)))}>
           Get previous Pokemons
         </Button>
         <Button
           variant="outlined"
-          onClick={() => dispatch(updateFilters({ next: true, offset: 20 }))}>
+          onClick={() => dispatch(updateFilters((offset += 20)))}>
           Get new Pokemons
         </Button>
       </div>
 
       <PokemonContainer>
-        {Array.isArray(pokemonList) &&
-          pokemonList.map(pokemon => (
-            <Tooltip key={pokemon.name} title="Show pokemon" placement="top">
-              <Button
-                sx={{ color: "inherit" }}
-                component={Link}
-                to={`/pokemons/${pokemon.name}`}>
-                <div>
-                  <p style={{ textTransform: "capitalize" }}>{pokemon.name}</p>
-                </div>
-              </Button>
-            </Tooltip>
-          ))}
+        {pokemonList.map(pokemon => (
+          <Tooltip key={pokemon.name} title="Show pokemon" placement="top">
+            <Button
+              sx={{ color: "inherit" }}
+              component={Link}
+              to={`/pokemons/${pokemon.name}`}>
+              <div>
+                <p style={{ textTransform: "capitalize" }}>{pokemon.name}</p>
+              </div>
+            </Button>
+          </Tooltip>
+        ))}
       </PokemonContainer>
     </div>
   );
