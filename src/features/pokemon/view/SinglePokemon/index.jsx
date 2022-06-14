@@ -21,12 +21,7 @@ const SinglePokemon = () => {
   const pokemonIsFetching = useSelector(selectSinglePokemonFetching);
   const fetchingError = useSelector(selectSinglePokemonError);
 
-  // const fetchSinglePokemon = useCallback(() => {
-  //   dispatch(fetchPokemon(pokemonId));
-  // }, [dispatch, pokemonId]);
-
   useEffect(() => {
-    // fetchSinglePokemon();
     dispatch(fetchPokemon(pokemonId));
   }, [dispatch, pokemonId]);
 
