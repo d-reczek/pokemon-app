@@ -7,12 +7,21 @@ import {
   selectPokemonsError,
   selectPokemonFilters,
   resetPokemonVisibility,
-  updateFilters,
+  updateOffset,
+  updatePageSize,
 } from "../../pokemonsSlice";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import styled from "styled-components";
-import { Button, Tooltip, Typography } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 
 const PokemonContainer = styled.div`
@@ -30,11 +39,11 @@ const PokemonContainer = styled.div`
 `;
 const PokemonList = () => {
   const dispatch = useDispatch();
-  let { offset, limit } = useSelector(selectPokemonFilters);
+  let { offset, pageSize } = useSelector(selectPokemonFilters);
   const fetchAllPokemons = useCallback(() => {
-    dispatch(fetchPokemons({ offset, limit }));
+    dispatch(fetchPokemons({ offset, pageSize }));
     dispatch(resetPokemonVisibility());
-  }, [dispatch, offset, limit]);
+  }, [dispatch, offset, pageSize]);
 
   useEffect(() => {
     fetchAllPokemons();
@@ -44,6 +53,9 @@ const PokemonList = () => {
   const pokemonsIsFetching = useSelector(selectPokemonsFetching);
   const fetchingError = useSelector(selectPokemonsError);
 
+  const handleQuantityOfPokemons = e => {
+    dispatch(updatePageSize(e.target.value));
+  };
   if (pokemonsIsFetching) {
     return (
       <Box
@@ -81,16 +93,27 @@ const PokemonList = () => {
       <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
         <Button
           variant="outlined"
-          onClick={() => dispatch(updateFilters((offset -= 20)))}>
+          onClick={() => dispatch(updateOffset((offset -= 20)))}>
           Get previous Pokemons
         </Button>
         <Button
           variant="outlined"
-          onClick={() => dispatch(updateFilters((offset += 20)))}>
+          onClick={() => dispatch(updateOffset((offset += 20)))}>
           Get new Pokemons
         </Button>
       </div>
-
+      <FormControl sx={{ width: "40%", m: "2%" }}>
+        <InputLabel>Select quantity of pokemons</InputLabel>
+        <Select
+          label="Select quantity of pokemons"
+          onChange={handleQuantityOfPokemons}
+          value={pageSize}>
+          <MenuItem value={10}>10</MenuItem>
+          <MenuItem value={20}>20</MenuItem>
+          <MenuItem value={30}>30</MenuItem>
+          <MenuItem value={40}>40</MenuItem>
+        </Select>
+      </FormControl>
       <PokemonContainer>
         {pokemonList.map(pokemon => (
           <Tooltip key={pokemon.name} title="Show pokemon" placement="top">

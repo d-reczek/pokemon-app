@@ -64,13 +64,16 @@ export const pokemonsSlice = createSlice({
       state.pokemonVisibilty = false;
     },
 
-    updateFilters: (state, action) => {
+    updateOffset: (state, action) => {
       if (state.filters.offset === 0) {
-        state.filters.offset = 0;
+        state.filters.offset = 20;
         alert("this is first page with pokemons");
       } else {
         state.filters.offset = action.payload;
       }
+    },
+    updatePageSize: (state, action) => {
+      state.filters.pageSize = action.payload;
     },
   },
 
@@ -108,7 +111,8 @@ export const {
   getNewPokemons,
   getPreviousPokemons,
   resetPokemonVisibility,
-  updateFilters,
+  updateOffset,
+  updatePageSize,
 } = pokemonsSlice.actions;
 export const selectPokemonsFetching = state =>
   state.pokemons.listOfAllPokemons.isFetching;
