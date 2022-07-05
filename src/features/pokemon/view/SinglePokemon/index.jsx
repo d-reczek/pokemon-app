@@ -55,7 +55,11 @@ const SinglePokemon = () => {
   console.log(fetchdPokemon);
   return (
     <>
-      <Button component={Link} to={`/pokemons/`}>
+      <Button
+        variant="outlined"
+        sx={{ m: "1rem" }}
+        component={Link}
+        to={`/pokemons/`}>
         Back to pokemon list
       </Button>
       {fetchdPokemon && (

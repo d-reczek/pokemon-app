@@ -72,7 +72,9 @@ const RandomPokemon = () => {
   }
   return (
     <>
-      <Button onClick={handleGetNewRandomPokemon} sx={{ margin: "30px" }}>
+      <Button
+        onClick={handleGetNewRandomPokemon}
+        sx={{ fontSize: "1.5rem", margin: "30px" }}>
         {pokemonVisibility ? "Get new random pokemon" : "Who's that Pokemon?"}
       </Button>
       <div>

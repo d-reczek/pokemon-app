@@ -20,26 +20,35 @@ import {
   MenuItem,
   Select,
   Tooltip,
-  Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import { TitleContainer } from "../../../basicViews/Home";
+import { theme } from "../../../../app/theme";
 
 const PokemonContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  width: 80%;
+  flex-wrap: wrap;
+  width: 60%;
   margin: 20px auto;
   padding: 20px;
   gap: 20px;
   flex-wrap: wrap;
   font-size: 24px;
-  background-color: lightgrey;
-  border-radius: 15px;
+  background-color: #f2aeae;
+`;
+const PokemonName = styled.div`
+  color: #fff;
+  background-color: ${theme.palette.secondary.main};
+  width: 100px;
+  :hover {
+    background-color: ${theme.palette.primary.main};
+  }
 `;
 const PokemonList = () => {
   const dispatch = useDispatch();
-  const { offset, pageSize } = useSelector(selectPokemonFilters);
+  let { offset, pageSize } = useSelector(selectPokemonFilters);
 
   useEffect(() => {
     dispatch(fetchPokemons({ offset, pageSize }));
@@ -80,12 +89,11 @@ const PokemonList = () => {
       </Box>
     );
   }
-
   return (
     <div>
-      <Typography style={{ fontSize: "30px", margin: "10px" }} variant="h1">
+      <TitleContainer style={{ fontSize: "30px", margin: "10px" }} variant="h1">
         List of all pokemons
-      </Typography>
+      </TitleContainer>
 
       <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
         <Button
@@ -99,7 +107,10 @@ const PokemonList = () => {
           Get new Pokemons
         </Button>
       </div>
-      <FormControl sx={{ width: "250px", m: "2%" }}>
+      <FormControl
+        variant="outlined"
+        color="secondary"
+        sx={{ width: "250px", m: "2%" }}>
         <InputLabel>Select quantity of pokemons</InputLabel>
         <Select
           label="Select quantity of pokemons"
@@ -111,16 +122,19 @@ const PokemonList = () => {
           <MenuItem value={40}>40</MenuItem>
         </Select>
       </FormControl>
+
       <PokemonContainer>
         {pokemonList.map(pokemon => (
           <Tooltip key={pokemon.name} title="Show pokemon" placement="top">
             <Button
-              sx={{ color: "inherit" }}
+              sx={{
+                color: "inherit",
+              }}
               component={Link}
               to={`/pokemons/${pokemon.name}`}>
-              <div>
+              <PokemonName>
                 <p style={{ textTransform: "capitalize" }}>{pokemon.name}</p>
-              </div>
+              </PokemonName>
             </Button>
           </Tooltip>
         ))}
