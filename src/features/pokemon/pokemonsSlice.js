@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const pokemonInitialState = {
   listOfAllPokemons: {
@@ -23,10 +24,10 @@ export const fetchPokemons = createAsyncThunk(
   async filters => {
     const { offset, pageSize } = filters;
     const response = await (
-      await fetch(
+      await axios(
         `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${pageSize}`
       )
-    ).json();
+    ).data;
 
     console.log(response);
 
