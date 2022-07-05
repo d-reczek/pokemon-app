@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 
 const Navigation = () => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar sx={{ flexWrap: "wrap" }}>
           <Button color="inherit" component={Link} to="/">
             Home
           </Button>

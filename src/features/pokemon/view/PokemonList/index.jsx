@@ -95,7 +95,13 @@ const PokemonList = () => {
         List of all pokemons
       </TitleContainer>
 
-      <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
+      <div
+        style={{
+          margin: "20px",
+          display: "flex",
+          justifyContent: "center",
+          gap: "20px",
+        }}>
         <Button
           variant="outlined"
           onClick={() => dispatch(updateOffset((offset -= 20)))}>
