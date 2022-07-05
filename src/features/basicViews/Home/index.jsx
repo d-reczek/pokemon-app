@@ -11,7 +11,7 @@ const Title = styled.h1`
 `;
 const Description = styled.p`
   font-size: 1.5rem;
-  text-transform: capitalize;
+  text-transform: initial
 `;
 const Home = () => {
   return (

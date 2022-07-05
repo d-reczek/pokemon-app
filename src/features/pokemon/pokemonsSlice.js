@@ -29,7 +29,7 @@ export const fetchPokemons = createAsyncThunk(
       )
     ).data;
 
-    console.log(response);
+    // console.log(response);
 
     return response;
   }
@@ -41,7 +41,7 @@ export const fetchPokemon = createAsyncThunk(
       await axios(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
     ).data;
 
-    console.log(response);
+    // console.log(response);
 
     return response;
   }

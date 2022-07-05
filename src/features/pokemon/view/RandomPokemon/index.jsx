@@ -13,6 +13,7 @@ import {
 } from "../../pokemonsSlice";
 import { Button } from "@mui/material";
 import SinglePokemonContainer from "../components/SingldePokemonContainer";
+import { theme } from "../../../../app/theme";
 
 const RandomPokemon = () => {
   const [randomNumber, setRandomNumber] = useState();
@@ -74,7 +75,15 @@ const RandomPokemon = () => {
     <>
       <Button
         onClick={handleGetNewRandomPokemon}
-        sx={{ fontSize: "1.5rem", margin: "30px" }}>
+        sx={{
+          fontSize: "1.5rem",
+          margin: "30px",
+
+          ":hover": {
+            backgroundColor: theme.palette.primary.main,
+            color: "#fff",
+          },
+        }}>
         {pokemonVisibility ? "Get new random pokemon" : "Who's that Pokemon?"}
       </Button>
       <div>
