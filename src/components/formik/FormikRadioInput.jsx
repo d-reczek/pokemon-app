@@ -8,9 +8,8 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useField } from "formik";
-const FormikRadioInput = ({ name, ...props }) => {
+const FormikRadioInput = ({ name }) => {
   const [field, meta, helpers] = useField(name);
-  console.log(meta.error);
   return (
     <FormControl error={!!meta.error} variant="standard">
       <FormLabel>I agree to the terms of use</FormLabel>

@@ -9,14 +9,7 @@ import PasswordForm from "./PasswordForm";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserData, selectUserData } from "../userSlice";
 import { useEffect } from "react";
-import {
-  FormControl,
-  FormControlLabel,
-  FormHelperText,
-  FormLabel,
-  Radio,
-  RadioGroup,
-} from "@mui/material";
+
 
 const Add = () => {
   const updateProfile = values =>
