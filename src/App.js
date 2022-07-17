@@ -10,6 +10,7 @@ import { ThemeProvider as MaterialUIProvider } from "@mui/material";
 import { theme } from "./app/theme";
 import { StylesProvider } from "@mui/styles";
 import { ThemeProvider } from "styled-components";
+import Add from "./features/basicViews/Add/Add";
 function App() {
   return (
     <StylesProvider injectFirst>
@@ -27,6 +28,7 @@ function App() {
                     path="/pokemons/:pokemonId"
                     element={<SinglePokemon />}
                   />
+                  <Route path="/add" element={<Add />} />
                 </>
               </Routes>
             </Router>

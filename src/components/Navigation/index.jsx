@@ -19,6 +19,9 @@ const Navigation = () => {
           <Button color="inherit" component={Link} to={`/pokemons/random`}>
             Random Pokemon
           </Button>
+          <Button color="inherit" component={Link} to={`/add`}>
+            Add
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
