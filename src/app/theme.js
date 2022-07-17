@@ -1,13 +1,13 @@
-import { red } from "@mui/material/colors";
+import { teal } from "@mui/material/colors";
 const { createTheme } = require("@mui/material");
 
 export const theme = createTheme({
   palette: {
     primary: {
-      main: red[500],
+      main: teal[500],
     },
     secondary: {
-      main: red[900],
+      main: teal[900],
     },
   },
 });

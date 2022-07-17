@@ -9,6 +9,14 @@ import PasswordForm from "./PasswordForm";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserData, selectUserData } from "../userSlice";
 import { useEffect } from "react";
+import {
+  FormControl,
+  FormControlLabel,
+  FormHelperText,
+  FormLabel,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
 
 const Add = () => {
   const updateProfile = values =>
@@ -34,7 +42,10 @@ const Add = () => {
     name: yup.string().required("Name is required"),
     surname: yup.string().required("Surname is required"),
     email: yup.string().email().required("Email is required"),
-    isCodexAgreed: yup.boolean().required("Agree the terms of use"),
+    isCodexAgreed: yup
+      .boolean()
+      .oneOf([true], "Terms must be accepted")
+      .required("Agree the terms of use"),
   });
 
   const onSubmit = async values => {
@@ -82,11 +93,7 @@ const Add = () => {
                 />
               </Box>
               <Box display={"flex"} justifyContent={"end"} pt={2}>
-                <FormikRadioInput
-                  name="isCodexAgreed"
-                  type="radio"
-                  label="I agree to the terms of use"
-                />
+                <FormikRadioInput name="isCodexAgreed" />
               </Box>
               <Box display={"flex"} justifyContent={"flex-end"} pt={2}>
                 <Button
