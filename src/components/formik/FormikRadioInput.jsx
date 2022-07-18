@@ -8,30 +8,25 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useField } from "formik";
-const FormikRadioInput = ({ name }) => {
+const FormikRadioInput = ({ title, name, ...props }) => {
   const [field, meta, helpers] = useField(name);
+  const { value } = field;
+  const { setValue } = helpers;
+  console.log("value", field.value);
   return (
     <FormControl error={!!meta.error} variant="standard">
-      <FormLabel>I agree to the terms of use</FormLabel>
-      <RadioGroup
-        name={field.name}
-        checked={field.checked}
-        onBlur={field.onBlur}
-        onChange={field.onChange}>
-        <Box>
-          <FormControlLabel
-            control={<Radio />}
-            labelPlacement="start"
-            value={true}
-            label="Yes"
-          />
-          <FormControlLabel
-            control={<Radio />}
-            labelPlacement="start"
-            value={false}
-            label="No"
-          />
-        </Box>
+      <FormLabel>{title}</FormLabel>
+      <RadioGroup>
+        <FormControlLabel
+          control={<Radio />}
+          labelPlacement="start"
+          name={field.name}
+          onBlur={field.onBlur}
+          onChange={field.onChange}
+          checked={!!value}
+          onClick={() => setValue(!value)}
+          {...props}
+        />
 
         <FormHelperText sx={{ textAlign: "right" }}>
           {meta.error}

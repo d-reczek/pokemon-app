@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUserData, selectUserData } from "../userSlice";
 import { useEffect } from "react";
 
-
 const Add = () => {
   const updateProfile = values =>
     new Promise((res, rej) => {
@@ -38,7 +37,7 @@ const Add = () => {
     isCodexAgreed: yup
       .boolean()
       .oneOf([true], "Terms must be accepted")
-      .required("Agree the terms of use"),
+      .required("Terms must be accepted"),
   });
 
   const onSubmit = async values => {
@@ -86,7 +85,13 @@ const Add = () => {
                 />
               </Box>
               <Box display={"flex"} justifyContent={"end"} pt={2}>
-                <FormikRadioInput name="isCodexAgreed" />
+                <FormikRadioInput
+                  name="isCodexAgreed"
+                  title="I agree to the terms of use"
+                  label="Accept"
+                  type="radio"
+                  value={true}
+                />
               </Box>
               <Box display={"flex"} justifyContent={"flex-end"} pt={2}>
                 <Button
