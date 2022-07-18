@@ -13,7 +13,7 @@ const getUserDataFromServer = () =>
         name: "John",
         surname: "Doe",
       });
-    }, 3000);
+    }, 1000);
   });
 
 export const fetchUserData = createAsyncThunk(

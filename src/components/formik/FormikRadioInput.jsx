@@ -6,13 +6,11 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
-import { Box } from "@mui/system";
 import { useField } from "formik";
 const FormikRadioInput = ({ title, name, ...props }) => {
   const [field, meta, helpers] = useField(name);
   const { value } = field;
   const { setValue } = helpers;
-  console.log("value", field.value);
   return (
     <FormControl error={!!meta.error} variant="standard">
       <FormLabel>{title}</FormLabel>

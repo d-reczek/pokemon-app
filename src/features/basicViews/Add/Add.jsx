@@ -9,13 +9,14 @@ import PasswordForm from "./PasswordForm";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserData, selectUserData } from "../userSlice";
 import { useEffect } from "react";
+import FormikCheckbox from "../../../components/formik/FormikCheckbox";
 
 const Add = () => {
   const updateProfile = values =>
     new Promise((res, rej) => {
       setTimeout(() => {
         res(console.log("updated", values));
-      }, 3000);
+      }, 1000);
     });
 
   const userData = useSelector(selectUserData);
@@ -29,6 +30,7 @@ const Add = () => {
     surname: userData ? userData.surname : "",
     email: userData ? userData.email : "",
     isCodexAgreed: "",
+    newsletter: [],
   };
   const validationSchema = yup.object({
     name: yup.string().required("Name is required"),
@@ -91,6 +93,29 @@ const Add = () => {
                   label="Accept"
                   type="radio"
                   value={true}
+                />
+              </Box>
+              <Typography sx={{ textAlign: "start" }} variant="h6">
+                Newsletter
+              </Typography>
+              <Box>
+                <FormikCheckbox
+                  name="newsletter"
+                  type="checkbox"
+                  label="Math"
+                  value="Math"
+                />
+                <FormikCheckbox
+                  name="newsletter"
+                  type="checkbox"
+                  label="Physics"
+                  value="Physics"
+                />
+                <FormikCheckbox
+                  name="newsletter"
+                  type="checkbox"
+                  label="Chemistry"
+                  value="Chemistry"
                 />
               </Box>
               <Box display={"flex"} justifyContent={"flex-end"} pt={2}>
