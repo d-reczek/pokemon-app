@@ -11,6 +11,7 @@ const FormikRadioInput = ({ title, name, ...props }) => {
   const [field, meta, helpers] = useField(name);
   const { value } = field;
   const { setValue } = helpers;
+  console.log(value);
   return (
     <FormControl error={!!meta.error} variant="standard">
       <FormLabel>{title}</FormLabel>
@@ -21,8 +22,7 @@ const FormikRadioInput = ({ title, name, ...props }) => {
           name={field.name}
           onBlur={field.onBlur}
           onChange={field.onChange}
-          checked={!!value}
-          onClick={() => setValue(!value)}
+          checked={value}
           {...props}
         />
 

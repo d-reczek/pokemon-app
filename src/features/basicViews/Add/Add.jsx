@@ -29,7 +29,7 @@ const Add = () => {
     name: userData ? userData.name : "",
     surname: userData ? userData.surname : "",
     email: userData ? userData.email : "",
-    isCodexAgreed: "",
+    isCodexAgreed: false,
     newsletter: [],
   };
   const validationSchema = yup.object({
@@ -40,6 +40,7 @@ const Add = () => {
       .boolean()
       .oneOf([true], "Terms must be accepted")
       .required("Terms must be accepted"),
+    newsletter: yup.string(),
   });
 
   const onSubmit = async values => {
@@ -92,7 +93,6 @@ const Add = () => {
                   title="I agree to the terms of use"
                   label="Accept"
                   type="radio"
-                  value={true}
                 />
               </Box>
               <Typography sx={{ textAlign: "start" }} variant="h6">
@@ -118,6 +118,32 @@ const Add = () => {
                   value="Chemistry"
                 />
               </Box>
+              <Typography sx={{ textAlign: "start" }} variant="h6">
+                items
+              </Typography>
+              <Box>
+                <FormikCheckbox
+                  name="items"
+                  type="checkbox"
+                  label="Math"
+                  value="item 1"
+                />
+                <FormikCheckbox
+                  name="items"
+                  type="checkbox"
+                  label="Physics"
+                  value="item 2"
+                />
+                <FormikCheckbox
+                  name="items"
+                  type="checkbox"
+                  label="Chemistry"
+                  value="item 3"
+                />
+              </Box>
+              {formik.errors.items && (
+                <p style={{ color: "red" }}>{formik.errors.items}</p>
+              )}
               <Box display={"flex"} justifyContent={"flex-end"} pt={2}>
                 <Button
                   type="submit"
