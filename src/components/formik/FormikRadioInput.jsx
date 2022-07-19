@@ -23,6 +23,7 @@ const FormikRadioInput = ({ title, name, ...props }) => {
           onBlur={field.onBlur}
           onChange={field.onChange}
           checked={value}
+          onClick={() => setValue(!value)}
           {...props}
         />
 
