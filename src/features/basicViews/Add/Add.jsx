@@ -36,10 +36,7 @@ const Add = () => {
     name: yup.string().required("Name is required"),
     surname: yup.string().required("Surname is required"),
     email: yup.string().email().required("Email is required"),
-    isCodexAgreed: yup
-      .boolean()
-      .oneOf([true], "Terms must be accepted")
-      .required("Terms must be accepted"),
+    isCodexAgreed: yup.boolean().oneOf([true]).required(),
     newsletter: yup.string(),
   });
 
@@ -61,7 +58,7 @@ const Add = () => {
           {formik => (
             <Form>
               {(() => {
-                console.log();
+                console.log(formik.values);
               })()}
               <Box pt={2}>
                 <FormikTextField
