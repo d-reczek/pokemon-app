@@ -51,5 +51,6 @@ export const userSlice = createSlice({
 export const actions = userSlice.actions;
 
 export const selectUserData = state => state.user.data;
+export const selectIsFetching = state => state.user.isFetching;
 
 export default userSlice.reducer;

@@ -7,7 +7,7 @@ import FormikTextField from "../../../components/formik/FormikTextField";
 import * as yup from "yup";
 import PasswordForm from "./PasswordForm";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserData, selectUserData } from "../userSlice";
+import { fetchUserData, selectIsFetching, selectUserData } from "../userSlice";
 import { useEffect } from "react";
 import FormikCheckbox from "../../../components/formik/FormikCheckbox";
 
@@ -20,6 +20,7 @@ const Add = () => {
     });
 
   const userData = useSelector(selectUserData);
+  const isFetching = useSelector(selectIsFetching);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUserData());
@@ -36,8 +37,12 @@ const Add = () => {
     name: yup.string().required("Name is required"),
     surname: yup.string().required("Surname is required"),
     email: yup.string().email().required("Email is required"),
-    isCodexAgreed: yup.boolean().oneOf([true]).required(),
-    newsletter: yup.string(),
+    isCodexAgreed: yup
+      .boolean()
+      .oneOf([true], "Terms must be accepted")
+      .required("Terms must be accepted"),
+    newsletter: yup.array().of(yup.string()),
+    items: yup.array().of(yup.string()).min(1).required(),
   });
 
   const onSubmit = async values => {
@@ -101,18 +106,21 @@ const Add = () => {
                   type="checkbox"
                   label="Math"
                   value="Math"
+                  disabled={isFetching}
                 />
                 <FormikCheckbox
                   name="newsletter"
                   type="checkbox"
                   label="Physics"
                   value="Physics"
+                  disabled={isFetching}
                 />
                 <FormikCheckbox
                   name="newsletter"
                   type="checkbox"
                   label="Chemistry"
                   value="Chemistry"
+                  disabled={isFetching}
                 />
               </Box>
               <Typography sx={{ textAlign: "start" }} variant="h6">
@@ -124,18 +132,21 @@ const Add = () => {
                   type="checkbox"
                   label="Math"
                   value="item 1"
+                  disabled={isFetching}
                 />
                 <FormikCheckbox
                   name="items"
                   type="checkbox"
                   label="Physics"
                   value="item 2"
+                  disabled={isFetching}
                 />
                 <FormikCheckbox
                   name="items"
                   type="checkbox"
                   label="Chemistry"
                   value="item 3"
+                  disabled={isFetching}
                 />
               </Box>
               {formik.errors.items && (
