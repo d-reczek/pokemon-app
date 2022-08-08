@@ -5,11 +5,11 @@ import FormikRadioInput from "../../../components/formik/FormikRadioInput";
 import FormikTextField from "../../../components/formik/FormikTextField";
 
 import * as yup from "yup";
-import PasswordForm from "./PasswordForm";
+import PasswordForm from "./components/PasswordForm";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserData, selectIsFetching, selectUserData } from "../userSlice";
 import { useEffect } from "react";
-import CheckboxError from "./CheckboxError";
+import CheckboxError from "./components/CheckboxError";
 import Newsletter from "./components/Newsletter";
 import Items from "./components/Items";
 

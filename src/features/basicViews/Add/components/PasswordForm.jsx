@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import * as yup from "yup";
 
 import { Formik, Form } from "formik"; // Formik to jest component który zapewnia
-import FormikTextField from "../../../components/formik/FormikTextField";
+import FormikTextField from "../../../../components/formik/FormikTextField";
 
 const PasswordForm = () => {
   const onSubmit = async values => {
