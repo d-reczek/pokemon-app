@@ -10,6 +10,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUserData, selectIsFetching, selectUserData } from "../userSlice";
 import { useEffect } from "react";
 import FormikCheckbox from "../../../components/formik/FormikCheckbox";
+import CheckboxError from "./CheckboxError";
+import Newsletter from "./components/Newsletter";
+import Items from "./components/Items";
 
 const Add = () => {
   const updateProfile = values =>
@@ -63,7 +66,9 @@ const Add = () => {
           {formik => (
             <Form>
               {(() => {
-                console.log(formik.values);
+                console.log("items err", !!formik.errors.items);
+                console.log("news", !!formik.touched.newsletter);
+                console.log("items", !!formik.touched.items);
               })()}
               <Box pt={2}>
                 <FormikTextField
@@ -97,61 +102,18 @@ const Add = () => {
                   type="radio"
                 />
               </Box>
-              <Typography sx={{ textAlign: "start" }} variant="h6">
-                Newsletter
-              </Typography>
-              <Box>
-                <FormikCheckbox
-                  name="newsletter"
-                  type="checkbox"
-                  label="Math"
-                  value="Math"
-                  disabled={isFetching}
-                />
-                <FormikCheckbox
-                  name="newsletter"
-                  type="checkbox"
-                  label="Physics"
-                  value="Physics"
-                  disabled={isFetching}
-                />
-                <FormikCheckbox
-                  name="newsletter"
-                  type="checkbox"
-                  label="Chemistry"
-                  value="Chemistry"
-                  disabled={isFetching}
-                />
-              </Box>
-              <Typography sx={{ textAlign: "start" }} variant="h6">
-                items
-              </Typography>
-              <Box>
-                <FormikCheckbox
-                  name="items"
-                  type="checkbox"
-                  label="Math"
-                  value="item 1"
-                  disabled={isFetching}
-                />
-                <FormikCheckbox
-                  name="items"
-                  type="checkbox"
-                  label="Physics"
-                  value="item 2"
-                  disabled={isFetching}
-                />
-                <FormikCheckbox
-                  name="items"
-                  type="checkbox"
-                  label="Chemistry"
-                  value="item 3"
-                  disabled={isFetching}
-                />
-              </Box>
-              {formik.errors.items && (
-                <p style={{ color: "red" }}>{formik.errors.items}</p>
-              )}
+
+              <Newsletter isFetching={isFetching} />
+              <Items isFetching={isFetching} />
+              {formik.touched.items &&
+                formik.touched.newsletter &&
+                formik.errors.items && (
+                  <CheckboxError
+                    error={formik.errors.items}
+                    touched={formik.touched.items}
+                  />
+                )}
+
               <Box display={"flex"} justifyContent={"flex-end"} pt={2}>
                 <Button
                   type="submit"

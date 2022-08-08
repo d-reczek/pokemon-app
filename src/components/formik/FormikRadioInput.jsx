@@ -12,7 +12,7 @@ const FormikRadioInput = ({ title, name, ...props }) => {
   const { value } = field;
   const { setValue } = helpers;
   return (
-    <FormControl error={!!meta.error} variant="standard">
+    <FormControl error={!!meta.error && !!meta.touched} variant="standard">
       <FormLabel>{title}</FormLabel>
       <RadioGroup onClick={() => setValue(!value)}>
         <FormControlLabel
@@ -23,10 +23,12 @@ const FormikRadioInput = ({ title, name, ...props }) => {
           checked={value}
           {...props}
         />
-
-        <FormHelperText sx={{ textAlign: "right" }}>
-          {meta.error}
-        </FormHelperText>
+        {meta.error && meta.touched && (
+          <FormHelperText sx={{ textAlign: "right" }}>
+            {meta.error}
+          </FormHelperText>
+        )}
+ 
       </RadioGroup>
     </FormControl>
   );
