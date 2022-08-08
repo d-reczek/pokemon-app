@@ -9,7 +9,6 @@ import PasswordForm from "./PasswordForm";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserData, selectIsFetching, selectUserData } from "../userSlice";
 import { useEffect } from "react";
-import FormikCheckbox from "../../../components/formik/FormikCheckbox";
 import CheckboxError from "./CheckboxError";
 import Newsletter from "./components/Newsletter";
 import Items from "./components/Items";
@@ -66,9 +65,7 @@ const Add = () => {
           {formik => (
             <Form>
               {(() => {
-                console.log("items err", !!formik.errors.items);
-                console.log("news", !!formik.touched.newsletter);
-                console.log("items", !!formik.touched.items);
+                console.log(formik);
               })()}
               <Box pt={2}>
                 <FormikTextField
@@ -108,10 +105,7 @@ const Add = () => {
               {formik.touched.items &&
                 formik.touched.newsletter &&
                 formik.errors.items && (
-                  <CheckboxError
-                    error={formik.errors.items}
-                    touched={formik.touched.items}
-                  />
+                  <CheckboxError error={formik.errors.items} />
                 )}
 
               <Box display={"flex"} justifyContent={"flex-end"} pt={2}>
