@@ -34,6 +34,7 @@ const Add = () => {
     email: userData ? userData.email : "",
     isCodexAgreed: false,
     newsletter: [],
+    items: [],
   };
   const validationSchema = yup.object({
     name: yup.string().required("Name is required"),

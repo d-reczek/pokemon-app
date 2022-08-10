@@ -6,6 +6,14 @@ const FormikCheckbox = ({ name, ...props }) => {
   return (
     <FormGroup>
       <FormControlLabel
+        sx={{
+          "& .MuiFormControlLabel-label": {
+            color:
+              meta.touched && !!meta.error
+                ? theme => theme.palette.error.main
+                : undefined,
+          },
+        }}
         control={<Checkbox />}
         name={field.name}
         value={field.value}

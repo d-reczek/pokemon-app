@@ -2,7 +2,7 @@ import { Typography, Button } from "@mui/material";
 import { Box } from "@mui/system";
 import * as yup from "yup";
 
-import { Formik, Form } from "formik"; // Formik to jest component który zapewnia
+import { Formik, Form } from "formik"; 
 import FormikTextField from "../../../../components/formik/FormikTextField";
 
 const PasswordForm = () => {
@@ -15,7 +15,7 @@ const PasswordForm = () => {
       .string()
       .min(6, "Minimum 6 characters")
       .required("Password is required"),
-    // TODO: dodatj tutaj walidację tak żeby jak ktoś wpisze confirmPassword INNE niż password to wywaliło bląd że hasła są różne
+
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password"), null], "Password doesn't match")

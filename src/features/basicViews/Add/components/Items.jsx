@@ -5,7 +5,7 @@ const Items = ({ isFetching }) => {
   return (
     <>
       <Typography sx={{ textAlign: "start" }} variant="h6">
-        items
+        Items
       </Typography>
       <Box>
         <FormikCheckbox
