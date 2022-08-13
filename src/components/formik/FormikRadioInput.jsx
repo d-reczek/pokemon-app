@@ -1,7 +1,4 @@
-import {
-  FormControlLabel,
-  Radio,
-} from "@mui/material";
+import { FormControlLabel, Radio } from "@mui/material";
 import { useField } from "formik";
 
 const FormikRadioInput = ({ title, name, ...props }) => {
@@ -9,17 +6,14 @@ const FormikRadioInput = ({ title, name, ...props }) => {
   const { value } = field;
   const { setValue } = helpers;
 
-  const handleToggleChecked = e => {
-    setValue(!value);
-  };
   return (
     <FormControlLabel
-      onClick={e => handleToggleChecked(e.target.value)}
       name={field.name}
       onBlur={field.onBlur}
       labelPlacement="start"
       control={
         <Radio
+          onClick={e => setValue(!value)}
           checked={value}
           sx={{
             color:
