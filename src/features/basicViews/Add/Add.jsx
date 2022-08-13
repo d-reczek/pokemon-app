@@ -101,11 +101,6 @@ const Add = () => {
 
               <Newsletter isFetching={isFetching} />
               <Items isFetching={isFetching} />
-              {/* {formik.touched.items &&
-                formik.touched.newsletter &&
-                formik.errors.items && (
-                  <CheckboxError error={formik.errors.items} />
-                )} */}
 
               <Box display={"flex"} justifyContent={"flex-end"} pt={2}>
                 <Button
