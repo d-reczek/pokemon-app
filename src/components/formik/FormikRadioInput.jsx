@@ -10,8 +10,6 @@ const FormikRadioInput = ({ title, name, ...props }) => {
   const { setValue } = helpers;
 
   const handleToggleChecked = e => {
-    console.log("e value", e);
-    console.log("value", value);
     setValue(!value);
   };
   return (
