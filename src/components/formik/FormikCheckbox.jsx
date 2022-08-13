@@ -14,7 +14,16 @@ const FormikCheckbox = ({ name, ...props }) => {
                 : undefined,
           },
         }}
-        control={<Checkbox />}
+        control={
+          <Checkbox
+            sx={{
+              color:
+                meta.touched && !!meta.error
+                  ? theme => theme.palette.error.main
+                  : undefined,
+            }}
+          />
+        }
         name={field.name}
         value={field.value}
         checked={field.checked}

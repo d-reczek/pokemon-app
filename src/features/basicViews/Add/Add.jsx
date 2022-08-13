@@ -9,7 +9,6 @@ import PasswordForm from "./components/PasswordForm";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserData, selectIsFetching, selectUserData } from "../userSlice";
 import { useEffect } from "react";
-import CheckboxError from "./components/CheckboxError";
 import Newsletter from "./components/Newsletter";
 import Items from "./components/Items";
 
@@ -66,7 +65,7 @@ const Add = () => {
           {formik => (
             <Form>
               {(() => {
-                console.log(formik);
+                // console.log(formik);
               })()}
               <Box pt={2}>
                 <FormikTextField
@@ -95,19 +94,18 @@ const Add = () => {
               <Box display={"flex"} justifyContent={"end"} pt={2}>
                 <FormikRadioInput
                   name="isCodexAgreed"
-                  title="I agree to the terms of use"
-                  label="Accept"
+                  label="I agree to the terms of use"
                   type="radio"
                 />
               </Box>
 
               <Newsletter isFetching={isFetching} />
               <Items isFetching={isFetching} />
-              {formik.touched.items &&
+              {/* {formik.touched.items &&
                 formik.touched.newsletter &&
                 formik.errors.items && (
                   <CheckboxError error={formik.errors.items} />
-                )}
+                )} */}
 
               <Box display={"flex"} justifyContent={"flex-end"} pt={2}>
                 <Button

@@ -1,36 +1,47 @@
 import {
-  FormControl,
   FormControlLabel,
-  FormHelperText,
-  FormLabel,
   Radio,
-  RadioGroup,
 } from "@mui/material";
 import { useField } from "formik";
+
 const FormikRadioInput = ({ title, name, ...props }) => {
   const [field, meta, helpers] = useField(name);
   const { value } = field;
   const { setValue } = helpers;
+
+  const handleToggleChecked = e => {
+    console.log("e value", e);
+    console.log("value", value);
+    setValue(!value);
+  };
   return (
-    <FormControl error={!!meta.error && !!meta.touched} variant="standard">
-      <FormLabel>{title}</FormLabel>
-      <RadioGroup onClick={() => setValue(!value)}>
-        <FormControlLabel
-          control={<Radio />}
-          labelPlacement="start"
-          name={field.name}
-          onBlur={field.onBlur}
+    <FormControlLabel
+      onClick={e => handleToggleChecked(e.target.value)}
+      name={field.name}
+      onBlur={field.onBlur}
+      labelPlacement="start"
+      control={
+        <Radio
           checked={value}
-          {...props}
+          sx={{
+            color:
+              meta.touched && !!meta.error
+                ? theme => theme.palette.error.main
+                : undefined,
+          }}
         />
-        {meta.error && meta.touched && (
-          <FormHelperText sx={{ textAlign: "right" }}>
-            {meta.error}
-          </FormHelperText>
-        )}
- 
-      </RadioGroup>
-    </FormControl>
+      }
+      value={value}
+      {...props}
+      sx={{
+        "& .MuiFormControlLabel-label": {
+          color:
+            meta.touched && !!meta.error
+              ? theme => theme.palette.error.main
+              : undefined,
+        },
+      }}
+    />
   );
 };
 
