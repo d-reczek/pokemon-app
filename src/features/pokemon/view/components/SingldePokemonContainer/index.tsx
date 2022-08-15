@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 import { theme } from "../../../../../app/theme";
 
@@ -26,8 +27,21 @@ const Image = styled.img`
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 `;
+interface SinglePokemonContainerProps {
+  id: string;
+  name: string;
+  img: string;
+  height: number;
+  weight: number;
+}
 
-const SinglePokemonContainer = ({ id, name, img, height, weight }) => {
+const SinglePokemonContainer: React.FC<SinglePokemonContainerProps> = ({
+  id,
+  name,
+  img,
+  height,
+  weight,
+}) => {
   return (
     <PokemonContainer key={id}>
       <TitleContainer>

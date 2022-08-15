@@ -1,15 +1,34 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState,  } from "../../app/store";
+import { RootState } from "../../app/store";
 import axios from "axios";
 
+interface PokemonsListTypes {
+  name: string;
+  url: string;
+}
+interface PokemonListTypes {
+  id: string;
+  name: string;
+  sprites: SpirtesTypes;
+  height: number;
+  weight: number;
+}
+
+interface SpirtesTypes {
+  other: {
+    ["official-artwork"]: {
+      front_default: string;
+    };
+  };
+}
 interface PokemonInitialStateTypes {
   listOfAllPokemons: {
-    data: any;
+    data: null | PokemonsListTypes[];
     isFetching: boolean;
     error: string | null;
   };
   singlePokemon: {
-    pokemon: any;
+    pokemon: null | PokemonListTypes;
     isFetching: boolean;
     error: string | null;
   };
@@ -53,7 +72,7 @@ export const fetchPokemons = createAsyncThunk(
       )
     ).data;
 
-    // console.log(response);
+    console.log(response.results);
 
     return response;
   }
@@ -65,7 +84,7 @@ export const fetchPokemon = createAsyncThunk(
       await axios(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
     ).data;
 
-    // console.log(response);
+    console.log(response);
 
     return response;
   }
@@ -129,8 +148,6 @@ export const pokemonsSlice = createSlice({
 
 export const {
   togglePokemonVisibility,
-  // getNewPokemons,
-  // getPreviousPokemons,
   resetPokemonVisibility,
   updateOffset,
   updatePageSize,

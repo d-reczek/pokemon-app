@@ -13,6 +13,7 @@ import {
 import { Button } from "@mui/material";
 import SinglePokemonContainer from "../components/SingldePokemonContainer";
 import { Link, useParams } from "react-router-dom";
+import React from "react";
 
 const SinglePokemon = () => {
   const dispatch = useAppDispatch();
