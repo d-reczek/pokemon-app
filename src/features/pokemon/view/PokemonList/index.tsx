@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import {
   fetchPokemons,
   selectListOfAllPokemons,
@@ -47,19 +47,21 @@ const PokemonName = styled.div`
   }
 `;
 const PokemonList = () => {
-  const dispatch = useDispatch();
-  let { offset, pageSize } = useSelector(selectPokemonFilters);
+  const dispatch = useAppDispatch();
+  let { offset, pageSize } = useAppSelector(selectPokemonFilters);
 
   useEffect(() => {
     dispatch(fetchPokemons({ offset, pageSize }));
     dispatch(resetPokemonVisibility());
   }, [dispatch, offset, pageSize]);
 
-  const pokemonList = useSelector(selectListOfAllPokemons);
-  const pokemonsIsFetching = useSelector(selectPokemonsFetching);
-  const fetchingError = useSelector(selectPokemonsError);
+  const pokemonList = useAppSelector(selectListOfAllPokemons);
+  const pokemonsIsFetching = useAppSelector(selectPokemonsFetching);
+  const fetchingError = useAppSelector(selectPokemonsError);
 
-  const handleQuantityOfPokemons = e => {
+  const handleQuantityOfPokemons = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     dispatch(updatePageSize(e.target.value));
   };
   if (pokemonsIsFetching) {
@@ -91,7 +93,7 @@ const PokemonList = () => {
   }
   return (
     <div>
-      <TitleContainer style={{ fontSize: "30px", margin: "10px" }} variant="h1">
+      <TitleContainer style={{ fontSize: "30px", margin: "10px" }}>
         List of all pokemons
       </TitleContainer>
 
@@ -120,7 +122,7 @@ const PokemonList = () => {
         <InputLabel>Select quantity of pokemons</InputLabel>
         <Select
           label="Select quantity of pokemons"
-          onChange={handleQuantityOfPokemons}
+          onChange={e => handleQuantityOfPokemons}
           value={pageSize}>
           <MenuItem value={10}>10</MenuItem>
           <MenuItem value={20}>20</MenuItem>
@@ -130,7 +132,7 @@ const PokemonList = () => {
       </FormControl>
 
       <PokemonContainer>
-        {pokemonList.map(pokemon => (
+        {pokemonList!.map(pokemon => (
           <Tooltip key={pokemon.name} title="Show pokemon" placement="top">
             <Button
               sx={{
