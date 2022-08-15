@@ -1,5 +1,6 @@
+
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppSelector, useAppDispatch } from "../../../../app/hooks";
 
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
@@ -14,12 +15,12 @@ import SinglePokemonContainer from "../components/SingldePokemonContainer";
 import { Link, useParams } from "react-router-dom";
 
 const SinglePokemon = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { pokemonId } = useParams();
 
-  const fetchdPokemon = useSelector(selectSinglePokemon);
-  const pokemonIsFetching = useSelector(selectSinglePokemonFetching);
-  const fetchingError = useSelector(selectSinglePokemonError);
+  const fetchdPokemon = useAppSelector(selectSinglePokemon);
+  const pokemonIsFetching = useAppSelector(selectSinglePokemonFetching);
+  const fetchingError = useAppSelector(selectSinglePokemonError);
 
   useEffect(() => {
     dispatch(fetchPokemon(pokemonId));
@@ -64,7 +65,7 @@ const SinglePokemon = () => {
       </Button>
       {fetchdPokemon && (
         <SinglePokemonContainer
-          key={fetchdPokemon.id}
+          id={fetchdPokemon.id}
           name={fetchdPokemon.name}
           img={fetchdPokemon.sprites.other["official-artwork"].front_default}
           height={fetchdPokemon.height}

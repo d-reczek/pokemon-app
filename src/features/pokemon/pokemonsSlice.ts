@@ -1,7 +1,26 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { RootState,  } from "../../app/store";
 import axios from "axios";
 
-const pokemonInitialState = {
+interface PokemonInitialStateTypes {
+  listOfAllPokemons: {
+    data: any;
+    isFetching: boolean;
+    error: string | null;
+  };
+  singlePokemon: {
+    pokemon: any;
+    isFetching: boolean;
+    error: string | null;
+  };
+  pokemonVisibilty: boolean;
+  filters: {
+    offset: number;
+    pageSize: number;
+  };
+}
+
+const pokemonInitialState: PokemonInitialStateTypes = {
   listOfAllPokemons: {
     data: null,
     isFetching: true,
@@ -19,9 +38,14 @@ const pokemonInitialState = {
   },
 };
 
+type FiltersType = {
+  offset: number;
+  pageSize: number;
+};
+
 export const fetchPokemons = createAsyncThunk(
   "pokemons/fetchPokemons",
-  async filters => {
+  async (filters: FiltersType) => {
     const { offset, pageSize } = filters;
     const response = await (
       await axios(
@@ -36,7 +60,7 @@ export const fetchPokemons = createAsyncThunk(
 );
 export const fetchPokemon = createAsyncThunk(
   "pokemons/fetchPokemon",
-  async pokemonName => {
+  async (pokemonName: string | undefined) => {
     const response = await (
       await axios(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
     ).data;
@@ -54,13 +78,7 @@ export const pokemonsSlice = createSlice({
     togglePokemonVisibility: state => {
       state.pokemonVisibilty = !state.pokemonVisibilty;
     },
-    //tu miałem problem z komponentem RandomPokemoen
-    //gdy po ustawieniu pokemonVisibility na true przalaczalem sie na widok
-    //komponentu PokemonList a nastpenie wracalem do PokemonRandom
-    //to wyskakiwal blad poniewaz pokemonVisibility pozostalo na true nie mogl wykonac sie fetch nowego pokemona
-    // i pojawial sie blad ze nie mozna wykonac map poniwaz zmienna nie jest tablica czy cos podobnego
-    //dlatego przy kazdym uruchomieniu jakby resetuje pokemonVisibility na false
-    // tak by uniknac tego bledu nie wiem czy jest to zrobione "zgodnie ze sztuka"
+
     resetPokemonVisibility: state => {
       state.pokemonVisibilty = false;
     },
@@ -111,28 +129,29 @@ export const pokemonsSlice = createSlice({
 
 export const {
   togglePokemonVisibility,
-  getNewPokemons,
-  getPreviousPokemons,
+  // getNewPokemons,
+  // getPreviousPokemons,
   resetPokemonVisibility,
   updateOffset,
   updatePageSize,
 } = pokemonsSlice.actions;
-export const selectPokemonsFetching = state =>
+export const selectPokemonsFetching = (state: RootState) =>
   state.pokemons.listOfAllPokemons.isFetching;
-export const selectPokemonsError = state =>
+export const selectPokemonsError = (state: RootState) =>
   state.pokemons.listOfAllPokemons.error;
-export const selectListOfAllPokemons = state =>
+export const selectListOfAllPokemons = (state: RootState) =>
   state.pokemons.listOfAllPokemons.data;
-export const selectSinglePokemon = state =>
+export const selectSinglePokemon = (state: RootState) =>
   state.pokemons.singlePokemon.pokemon;
-export const selectSinglePokemonFetching = state =>
+export const selectSinglePokemonFetching = (state: RootState) =>
   state.pokemons.singlePokemon.isFetching;
-export const selectSinglePokemonError = state =>
+export const selectSinglePokemonError = (state: RootState) =>
   state.pokemons.singlePokemon.error;
 
-export const selectTogglePokemonVisibility = state =>
+export const selectTogglePokemonVisibility = (state: RootState) =>
   state.pokemons.pokemonVisibilty;
 
-export const selectPokemonFilters = state => state.pokemons.filters;
+export const selectPokemonFilters = (state: RootState) =>
+  state.pokemons.filters;
 
 export default pokemonsSlice.reducer;
