@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import {
@@ -16,14 +15,14 @@ import SinglePokemonContainer from "../components/SingldePokemonContainer";
 import { theme } from "../../../../app/theme";
 
 const RandomPokemon = () => {
-  const [randomNumber, setRandomNumber] = useState();
-  const fetchdPokemon = useSelector(selectSinglePokemon);
-  const pokemonIsFetching = useSelector(selectSinglePokemonFetching);
-  const fetchingError = useSelector(selectSinglePokemonError);
-  const pokemonVisibility = useSelector(selectTogglePokemonVisibility);
-  const random = max => Math.floor(Math.random() * max) + 1;
-  const amountOfPokemons = 898;
-  const dispatch = useDispatch();
+  const [randomNumber, setRandomNumber] = useState<number>();
+  const fetchdPokemon = useAppSelector(selectSinglePokemon);
+  const pokemonIsFetching = useAppSelector(selectSinglePokemonFetching);
+  const fetchingError = useAppSelector(selectSinglePokemonError);
+  const pokemonVisibility = useAppSelector(selectTogglePokemonVisibility);
+  const random = (max: number) => Math.floor(Math.random() * max) + 1;
+  const amountOfPokemons: number = 898;
+  const dispatch = useAppDispatch();
 
   const fetchSinglePokemon = useCallback(() => {
     if (randomNumber) {
@@ -89,11 +88,11 @@ const RandomPokemon = () => {
       <div>
         {pokemonVisibility && (
           <SinglePokemonContainer
-            id={fetchdPokemon.id}
-            name={fetchdPokemon.name}
-            img={fetchdPokemon.sprites.other["official-artwork"].front_default}
-            height={fetchdPokemon.height}
-            weight={fetchdPokemon.weight}
+            id={fetchdPokemon!.id}
+            name={fetchdPokemon!.name}
+            img={fetchdPokemon!.sprites.other["official-artwork"].front_default}
+            height={fetchdPokemon!.height}
+            weight={fetchdPokemon!.weight}
           />
         )}
       </div>
