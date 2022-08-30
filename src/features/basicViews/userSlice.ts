@@ -1,10 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
 
-const userInitialState = {
+interface userInitialStateTypes {
+  isFetching: boolean;
+  data: null | unknown;
+}
+
+const userInitialState: userInitialStateTypes = {
   isFetching: true,
   data: null,
 };
-
 const getUserDataFromServer = () =>
   new Promise((res, rej) => {
     setTimeout(() => {
@@ -50,7 +55,7 @@ export const userSlice = createSlice({
 
 export const actions = userSlice.actions;
 
-export const selectUserData = state => state.user.data;
-export const selectIsFetching = state => state.user.isFetching;
+export const selectUserData = (state: RootState) => state.user.data;
+export const selectIsFetching = (state: RootState) => state.user.isFetching;
 
 export default userSlice.reducer;
