@@ -24,7 +24,7 @@ import {
 import { Link } from "react-router-dom";
 import { TitleContainer } from "../../../basicViews/Home";
 import { theme } from "../../../../app/theme";
-
+import React from "react";
 const PokemonContainer = styled.div`
   display: flex;
   justify-content: space-around;
@@ -59,11 +59,11 @@ const PokemonList = () => {
   const pokemonsIsFetching = useAppSelector(selectPokemonsFetching);
   const fetchingError = useAppSelector(selectPokemonsError);
 
-  const handleQuantityOfPokemons = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleQuantityOfPokemons = (e: any) => {
     dispatch(updatePageSize(e.target.value));
+    console.log(e.target.value);
   };
+
   if (pokemonsIsFetching) {
     return (
       <Box
@@ -122,7 +122,7 @@ const PokemonList = () => {
         <InputLabel>Select quantity of pokemons</InputLabel>
         <Select
           label="Select quantity of pokemons"
-          onChange={e => handleQuantityOfPokemons}
+          onChange={handleQuantityOfPokemons}
           value={pageSize}>
           <MenuItem value={10}>10</MenuItem>
           <MenuItem value={20}>20</MenuItem>
