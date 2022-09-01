@@ -1,16 +1,20 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-
+export interface UserObjectTypes {
+  email: string;
+  name: string;
+  surname: string;
+}
 interface userInitialStateTypes {
   isFetching: boolean;
-  data: null | unknown;
+  data: null | UserObjectTypes;
 }
 
 const userInitialState: userInitialStateTypes = {
   isFetching: true,
   data: null,
 };
-const getUserDataFromServer = () =>
+const getUserDataFromServer = (): any =>
   new Promise((res, rej) => {
     setTimeout(() => {
       res({
@@ -44,7 +48,6 @@ export const userSlice = createSlice({
       })
       .addCase(fetchUserData.fulfilled, (state, action) => {
         state.isFetching = false;
-
         state.data = action.payload;
       })
       .addCase(fetchUserData.rejected, state => {

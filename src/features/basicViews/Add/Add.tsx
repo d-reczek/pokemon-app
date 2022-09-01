@@ -6,28 +6,37 @@ import FormikTextField from "../../../components/formik/FormikTextField";
 
 import * as yup from "yup";
 import PasswordForm from "./components/PasswordForm";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+
 import { fetchUserData, selectIsFetching, selectUserData } from "../userSlice";
 import { useEffect } from "react";
 import Newsletter from "./components/Newsletter";
 import Items from "./components/Items";
 
+interface InitialValuesTypes {
+  name: string;
+  surname: string;
+  email: string;
+  isCodexAgreed: boolean;
+  newsletter: string[];
+  items: string[];
+}
 const Add = () => {
-  const updateProfile = values =>
+  const updateProfile = (values: InitialValuesTypes) =>
     new Promise((res, rej) => {
       setTimeout(() => {
         res(console.log("updated", values));
       }, 1000);
     });
 
-  const userData = useSelector(selectUserData);
-  const isFetching = useSelector(selectIsFetching);
-  const dispatch = useDispatch();
+  const userData = useAppSelector(selectUserData);
+  const isFetching = useAppSelector(selectIsFetching);
+  const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchUserData());
   }, [dispatch]);
 
-  const initialValues = {
+  const initialValues: InitialValuesTypes = {
     name: userData ? userData.name : "",
     surname: userData ? userData.surname : "",
     email: userData ? userData.email : "",
@@ -47,7 +56,7 @@ const Add = () => {
     items: yup.array().of(yup.string()).min(1).required(),
   });
 
-  const onSubmit = async values => {
+  const onSubmit = async (values: InitialValuesTypes) => {
     await updateProfile(values);
   };
 
@@ -64,9 +73,11 @@ const Add = () => {
           enableReinitialize>
           {formik => (
             <Form>
-              {(() => {
-                // console.log(formik);
-              })()}
+              <>
+                {(() => {
+                  console.log(formik);
+                })()}
+              </>
               <Box pt={2}>
                 <FormikTextField
                   name="email"

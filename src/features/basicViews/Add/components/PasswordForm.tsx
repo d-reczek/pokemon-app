@@ -2,11 +2,14 @@ import { Typography, Button } from "@mui/material";
 import { Box } from "@mui/system";
 import * as yup from "yup";
 
-import { Formik, Form } from "formik"; 
+import { Formik, Form } from "formik";
 import FormikTextField from "../../../../components/formik/FormikTextField";
-
+interface PasswordTypes {
+  password: string;
+  confirmPassword: string;
+}
 const PasswordForm = () => {
-  const onSubmit = async values => {
+  const onSubmit = async (values: PasswordTypes) => {
     console.log({ values });
   };
 
@@ -37,31 +40,36 @@ const PasswordForm = () => {
             }}
             onSubmit={onSubmit}
             validationSchema={validationSchema}>
-            <Form>
-              <Box pt={2}>
-                <FormikTextField
-                  name="password"
-                  type={"password"}
-                  placeholder="enter password"
-                  fullWidth
-                />
-              </Box>
+            {formik => (
+              <Form>
+                <Box pt={2}>
+                  <FormikTextField
+                    name="password"
+                    type={"password"}
+                    placeholder="enter password"
+                    fullWidth
+                  />
+                </Box>
 
-              <Box pt={2}>
-                <FormikTextField
-                  name="confirmPassword"
-                  type={"password"}
-                  placeholder="confirm password"
-                  fullWidth
-                />
-              </Box>
+                <Box pt={2}>
+                  <FormikTextField
+                    name="confirmPassword"
+                    type={"password"}
+                    placeholder="confirm password"
+                    fullWidth
+                  />
+                </Box>
 
-              <Box display={"flex"} justifyContent="flex-end" pt={2}>
-                <Button type="submit" variant="contained">
-                  Submit password
-                </Button>
-              </Box>
-            </Form>
+                <Box display={"flex"} justifyContent="flex-end" pt={2}>
+                  <Button
+                    disabled={!formik.isValid}
+                    type="submit"
+                    variant="contained">
+                    Submit password
+                  </Button>
+                </Box>
+              </Form>
+            )}
           </Formik>
         </Box>
       </Box>

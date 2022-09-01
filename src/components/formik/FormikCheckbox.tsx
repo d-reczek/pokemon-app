@@ -1,7 +1,14 @@
 import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import { useField } from "formik";
-
-const FormikCheckbox = ({ name, ...props }) => {
+interface FormikCheckboxProps {
+  name: string;
+  type: string;
+  label: string;
+  disabled: boolean;
+  multiple?: boolean;
+  value: string;
+}
+const FormikCheckbox: React.FC<FormikCheckboxProps> = ({ name, ...props }) => {
   const [field, meta] = useField(name);
   return (
     <FormGroup>
@@ -25,7 +32,6 @@ const FormikCheckbox = ({ name, ...props }) => {
           />
         }
         name={field.name}
-        value={field.value}
         checked={field.checked}
         onChange={field.onChange}
         onBlur={field.onBlur}

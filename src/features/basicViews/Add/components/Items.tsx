@@ -1,7 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import FormikCheckbox from "../../../../components/formik/FormikCheckbox";
-
-const Items = ({ isFetching }) => {
+interface ItemsProps {
+  isFetching: boolean;
+}
+const Items: React.FC<ItemsProps> = ({ isFetching }) => {
   return (
     <>
       <Typography sx={{ textAlign: "start" }} variant="h6">

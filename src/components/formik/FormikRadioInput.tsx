@@ -1,7 +1,15 @@
 import { FormControlLabel, Radio } from "@mui/material";
 import { useField } from "formik";
-
-const FormikRadioInput = ({ title, name, ...props }) => {
+interface FormikRadioInputProps {
+  name: string;
+  label: string;
+  type: string;
+}
+const FormikRadioInput: React.FC<FormikRadioInputProps> = ({
+  
+  name,
+  ...props
+}) => {
   const [field, meta, helpers] = useField(name);
   const { value } = field;
   const { setValue } = helpers;

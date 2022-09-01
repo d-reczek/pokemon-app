@@ -1,8 +1,13 @@
 import TextField from "@mui/material/TextField";
 import { useField } from "formik";
-
-const FormikTextField = ({ name, ...rest }) => {
-  const [field, meta, /* helpers*/] = useField(name);
+interface FormikTextFieldProps {
+  name: string;
+  type: string;
+  placeholder: string;
+  fullWidth: boolean;
+}
+const FormikTextField: React.FC<FormikTextFieldProps> = ({ name, ...rest }) => {
+  const [field, meta /* helpers*/] = useField(name);
   return (
     <TextField
       name={field.name}
